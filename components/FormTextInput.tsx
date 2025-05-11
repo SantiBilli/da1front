@@ -12,7 +12,7 @@ interface props {
   isPassword?: boolean;
 }
 
-const CustomTextInput = ({
+const FormTextInput = ({
   title,
   value,
   placeholder,
@@ -24,9 +24,9 @@ const CustomTextInput = ({
 }: props) => {
   return (
     <View className="w-full px-7">
-      <Text className={`text-primary text-[14px] ${textInputStyle}`}>{title}</Text>
+      <Text className={`text-[14px] text-primary ${textInputStyle}`}>{title}</Text>
       <TextInput
-        className={`border-secondary border-b-[1px] text-[14px] ${otherStyles}`}
+        className={`border-b-[1px] border-secondary py-2 text-[14px] ${otherStyles}`}
         value={value}
         placeholder={placeholder}
         onChangeText={(text) => handleChangeText(text)}
@@ -37,4 +37,4 @@ const CustomTextInput = ({
   );
 };
 
-export default CustomTextInput;
+export default FormTextInput;
