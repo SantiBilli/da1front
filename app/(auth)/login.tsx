@@ -1,14 +1,24 @@
-import { View, Text, ScrollView, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+} from 'react-native';
 import { useEffect, useState } from 'react';
 import images from '../../constants/images';
 import FormTextInput from 'components/FormTextInput';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ConfirmButton from 'components/ConfirmButton';
 
 const Login = () => {
   console.log('Login component rendered');
   const [mail, setMail] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const router = useRouter();
 
@@ -31,16 +41,22 @@ const Login = () => {
           <FormTextInput title="Password" value={contrasena} handleChangeText={setContrasena} />
         </View>
 
-        <Text className="my-[30px]">Recordarme</Text>
+        <View className="my-9 w-full flex-row items-center px-7">
+          <Pressable
+            onPress={() => setRememberMe(!rememberMe)}
+            className={`mr-2 h-5 w-5 rounded border-[1px] border-primary ${
+              rememberMe ? 'bg-primary' : 'bg-transparent'
+            }`}
+          />
+          <Text className="text-[12px] text-primary">Recordarme</Text>
+        </View>
 
-        <View className="flex items-center justify-center gap-5">
-          <Text className="" onPress={() => router.replace('/(tabs)/(home)/home')}>
-            Boton Iniciar Sesion
-          </Text>
+        <View className="flex items-center justify-center gap-6">
+          <ConfirmButton
+            title={'Iniciar Sesion'}
+            onPress={() => router.replace('/(tabs)/(home)/home')}
+          />
           <Text className="text-[14px] text-primary">Olvidaste tu contraseña?</Text>
-          {/* <Link className="text-[12px] text-primary" href="/register">
-            Crear Cuenta
-          </Link> */}
           <Text
             className="text-[12px] text-primary"
             onPress={() => router.push('/(auth)/register')}>

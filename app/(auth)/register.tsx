@@ -3,6 +3,7 @@ import { useState } from 'react';
 import FormTextInput from 'components/FormTextInput';
 import { useRouter } from 'expo-router';
 import images from 'constants/images';
+import ConfirmButton from 'components/ConfirmButton';
 
 const Register = () => {
   console.log('Register component rendered');
@@ -46,7 +47,7 @@ const Register = () => {
         </View>
 
         <View className="mt-10 flex items-center justify-center gap-5">
-          <Text className="">Boton Crear Cuenta</Text>
+          <ConfirmButton title={'Crear Cuenta'} onPress={() => router.replace('/(auth)/login')} />
 
           <Text className="text-[12px] text-primary" onPress={() => router.push('/(auth)/login')}>
             Iniciar Sesion
