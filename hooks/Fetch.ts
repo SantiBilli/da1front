@@ -57,6 +57,8 @@ export const useFetch = ({
         body: body ? (formData ? body : JSON.stringify(body)) : null,
       });
 
+      console.log('Status: ', response.status);
+
       if (!response.ok) {
         const res = await response.json();
         setError({ status: response.status, msg: res.message });
@@ -65,18 +67,6 @@ export const useFetch = ({
 
       const res = await response.json();
       setData({ status: response.status, msg: res.message, data: res.data });
-
-      if (sendToken) {
-        console.log('Fetch Token:', token);
-
-        const newToken = response.headers.get('Authorization');
-
-        console.log('New Token:', newToken);
-
-        if (newToken?.startsWith('Bearer ')) {
-          setToken(newToken.split(' ')[1]);
-        }
-      }
     } catch (err) {
       router.replace('/oops');
     } finally {

@@ -37,6 +37,7 @@ const Login = () => {
     body: {
       mail: mail,
       contrasenia: contrasenia,
+      recordar: rememberMe,
     },
   });
 

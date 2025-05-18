@@ -56,7 +56,7 @@ const Home = () => {
           <View className="mt-6 flex-row flex-wrap justify-around  px-4">
             {filteredSpecialties.map((item, index) => (
               <TouchableOpacity
-                onPress={() => router.push(`(home)/(doctors)/doctors-list/${item.name}`)}
+                onPress={() => router.push(`(home)/doctors-list/${item.name}`)}
                 key={index}
                 className="mb-5 h-[140px] w-[140px] items-center justify-center gap-5 rounded-[10px] border border-secondary">
                 <Image source={item.icon} style={{ width: 40, height: 40 }} resizeMode="contain" />

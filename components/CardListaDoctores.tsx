@@ -5,17 +5,19 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 
 interface props {
-  id_doctor: string;
+  id_medico: string;
   nombre: string;
+  apellido: string;
   direccion: string;
   disponibilidad: string;
   pfp: string;
   otherStyles?: string;
 }
 
-const CardListaDoctores = ({
-  id_doctor,
+const CardListamedicoes = ({
+  id_medico,
   nombre,
+  apellido,
   direccion,
   disponibilidad,
   pfp,
@@ -25,7 +27,7 @@ const CardListaDoctores = ({
 
   return (
     <TouchableOpacity
-      onPress={() => router.push(`(home)/(doctors)/doctors-list/doctors-details/${id_doctor}`)}>
+      onPress={() => router.push(`(home)/doctors-list/doctors-details/${id_medico}`)}>
       <LinearGradient
         colors={['#45CADE4D', '#A0E8EB4D', '#FFFFFF4D']}
         locations={[0.0, 0.5, 1.0]}
@@ -48,7 +50,10 @@ const CardListaDoctores = ({
         </View>
         <View className="flex-1 gap-4 ">
           <Text className="text-[15px]  text-primary">
-            Dra. <Text className="text-black">{nombre}</Text>
+            Dra.{' '}
+            <Text className="text-black">
+              {nombre} {apellido}
+            </Text>
           </Text>
           <View className="justi flex-row items-center gap-2">
             <Icons name="location-pin" color={'#3AB4E5'} size={20} />
@@ -64,4 +69,4 @@ const CardListaDoctores = ({
   );
 };
 
-export default CardListaDoctores;
+export default CardListamedicoes;
