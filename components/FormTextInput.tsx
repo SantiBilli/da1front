@@ -1,5 +1,6 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import React from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import Icon from 'react-native-vector-icons/Octicons';
 
 interface props {
   title: string;
@@ -20,19 +21,27 @@ const FormTextInput = ({
   otherStyles,
   textInputStyle,
   maxLength,
-  isPassword,
+  isPassword = false,
 }: props) => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <View className="w-full px-7">
       <Text className={`text-[14px] text-primary ${textInputStyle}`}>{title}</Text>
-      <TextInput
-        className={`border-b-[1px] border-secondary py-2 text-[14px] ${otherStyles}`}
-        value={value}
-        placeholder={placeholder}
-        onChangeText={(text) => handleChangeText(text)}
-        maxLength={maxLength}
-        secureTextEntry={isPassword ? true : false}
-      />
+      <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
+        <TextInput
+          className={`flex-1 text-[14px] ${otherStyles}`}
+          value={value}
+          placeholder={placeholder}
+          onChangeText={(text) => handleChangeText(text)}
+          maxLength={maxLength}
+          secureTextEntry={!showPassword && isPassword ? true : false}
+        />
+        {isPassword == true ? (
+          <TouchableOpacity className="" onPress={() => setShowPassword(!showPassword)}>
+            <Icon name={showPassword ? 'eye' : 'eye-closed'} size={20} color={'#B2B2B2'} />
+          </TouchableOpacity>
+        ) : null}
+      </View>
     </View>
   );
 };

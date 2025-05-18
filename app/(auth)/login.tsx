@@ -13,18 +13,65 @@ import FormTextInput from 'components/FormTextInput';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ConfirmButton from 'components/ConfirmButton';
+import { useAuthStore } from 'hooks/AuthStore';
+import { useFetch } from 'hooks/Fetch';
+import { replace } from 'expo-router/build/global-state/routing';
 
 const Login = () => {
   console.log('Login component rendered');
   const [mail, setMail] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [contrasenia, setContrasena] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   const router = useRouter();
 
+  const [trigger, setTrigger] = useState(false);
+
+  const { data, error, isLoading } = useFetch({
+    endpoint: '/logins',
+    method: 'POST',
+    trigger: trigger,
+    sendToken: false,
+    body: {
+      mail: mail,
+      contrasenia: contrasenia,
+    },
+  });
+
+  const { setToken, token } = useAuthStore();
+
   useEffect(() => {
-    console.log(mail);
-  }, [mail]);
+    setToken(null);
+  }, []);
+
+  const handlePress = async () => {
+    setInvalidCredentials(false);
+    setTrigger(true);
+  };
+
+  useEffect(() => {
+    if (trigger) return setTrigger(false);
+  }, [trigger]);
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+
+    const content = data.data;
+    console.log('Token:', content.token);
+
+    setToken(content.token);
+
+    router.replace('/(home)/home');
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    if (error != null) {
+      if (error.status === 401) return setInvalidCredentials(true);
+      if (error.status === 500) return router.replace('/oops');
+    }
+  }, [error]);
 
   return (
     <KeyboardAvoidingView
@@ -38,7 +85,12 @@ const Login = () => {
         <Text className="mb-[50px] text-[32px] text-primary">Iniciar Sesión</Text>
         <View className="flex w-full gap-[60px]">
           <FormTextInput title="Email" value={mail} handleChangeText={setMail} />
-          <FormTextInput title="Password" value={contrasena} handleChangeText={setContrasena} />
+          <FormTextInput
+            title="Password"
+            value={contrasenia}
+            handleChangeText={setContrasena}
+            isPassword={true}
+          />
         </View>
 
         <View className="my-9 w-full flex-row items-center px-7">
@@ -52,9 +104,13 @@ const Login = () => {
         </View>
 
         <View className="flex items-center justify-center gap-6">
+          {invalidCredentials && (
+            <Text className="text-[12px] text-red-500">Credenciales invalidas.</Text>
+          )}
           <ConfirmButton
             title={'Iniciar Sesion'}
-            onPress={() => router.replace('/(tabs)/(home)/home')}
+            onPress={handlePress}
+            disabled={(mail == '' && contrasenia == '') || isLoading}
           />
           <Text className="text-[14px] text-primary">Olvidaste tu contraseña?</Text>
           <Text

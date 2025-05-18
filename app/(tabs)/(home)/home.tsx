@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useEffect, useState } from 'react';
 import icons from 'constants/icons';
+import { useAuthStore } from 'hooks/AuthStore';
 
 const specialtiesData = [
   { name: 'Dermatólogo', icon: icons.dermatologo },

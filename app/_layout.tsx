@@ -8,7 +8,9 @@ export default function Layout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-background">
-        <Stack initialRouteName="index" screenOptions={{ headerShown: false }} />
+        <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="oops" />
+        </Stack>
       </SafeAreaView>
     </SafeAreaProvider>
   );

@@ -7,27 +7,20 @@ import { Text, View } from 'react-native';
 export default function Index() {
   console.log('Index page loaded');
 
-  // const { data, error, isLoading } = useFetch({
-  //   endpoint: '/authentications',
-  //   method: 'POST',
-  //   trigger: true,
-  //   sendToken: true,
-  // });
+  const { data, error, isLoading } = useFetch({
+    endpoint: '/authentications',
+    method: 'POST',
+    trigger: true,
+    sendToken: true,
+  });
 
-  // console.log('');
-  // console.log('Data:', data);
-  // console.log('Error:', error);
-  // console.log('Is Loading:', isLoading);
+  useEffect(() => {
+    if (isLoading || !data) return;
 
-  // useEffect(() => {
-  //   if (isLoading || !data) return;
+    return router.replace('/(tabs)/home');
+  }, [data, isLoading]);
 
-  //   return router.replace('/(tabs)/home');
-  // }, [data, isLoading]);
-
-  // useEffect(() => {
-  //   if (error) return router.replace('/(auth)/login');
-  // }, [error]);
-
-  return <Redirect href="/(auth)/login" />;
+  useEffect(() => {
+    if (error) return router.replace('/(auth)/login');
+  }, [error]);
 }
