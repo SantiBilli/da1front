@@ -50,7 +50,7 @@ const CardListamedicoes = ({
         </View>
         <View className="flex-1 gap-4 ">
           <Text className="text-[15px]  text-primary">
-            Dra.{' '}
+            Dr/a.{' '}
             <Text className="text-black">
               {nombre} {apellido}
             </Text>

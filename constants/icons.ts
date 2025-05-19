@@ -1,5 +1,3 @@
-import eye from '../assets/icons/eye.png';
-import eyeOff from '../assets/icons/eye-hide.png';
 import dermatologo from '../assets/icons/dermatologo.png';
 import cardiologo from '../assets/icons/cardiologo.png';
 import pediatra from '../assets/icons/pediatra.png';
@@ -10,8 +8,6 @@ import oftalmologo from '../assets/icons/oftalmologo.png';
 import psicologo from '../assets/icons/psicologo.png';
 
 export default {
-  eye,
-  eyeOff,
   dermatologo,
   cardiologo,
   pediatra,

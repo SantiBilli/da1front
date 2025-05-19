@@ -1,21 +1,11 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-} from 'react-native';
+import { View, Text, Image, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import images from '../../constants/images';
 import FormTextInput from 'components/FormTextInput';
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ConfirmButton from 'components/ConfirmButton';
 import { useAuthStore } from 'hooks/AuthStore';
 import { useFetch } from 'hooks/Fetch';
-import { replace } from 'expo-router/build/global-state/routing';
 
 const Login = () => {
   console.log('Login component rendered');
@@ -41,10 +31,10 @@ const Login = () => {
     },
   });
 
-  const { setToken, token } = useAuthStore();
+  const { setToken, token, clearToken } = useAuthStore();
 
   useEffect(() => {
-    setToken(null);
+    clearToken();
   }, []);
 
   const handlePress = async () => {
