@@ -10,7 +10,7 @@ const medicoDetail = () => {
 
   return (
     <View>
-      <Text>medico Detail: {id}</Text>
+      <Text>Medico Detail: {id}</Text>
     </View>
   );
 };
