@@ -1,4 +1,12 @@
-import { View, Text, Image, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import { useEffect, useState } from 'react';
 import images from '../../constants/images';
 import FormTextInput from 'components/FormTextInput';
@@ -103,7 +111,9 @@ const Login = () => {
             onPress={handlePress}
             disabled={(mail == '' && contrasenia == '') || isLoading}
           />
-          <Text className="text-[14px] text-primary">Olvidaste tu contraseña?</Text>
+          <TouchableOpacity>
+            <Text className="text-[14px] text-primary">Olvidaste tu contraseña?</Text>
+          </TouchableOpacity>
           <Text
             className="text-[12px] text-primary"
             onPress={() => router.push('/(auth)/register')}>
