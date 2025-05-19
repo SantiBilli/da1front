@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthStore } from './AuthStore';
-import { router } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 
 interface UseFetchParams {
   endpoint: string;
@@ -10,6 +10,7 @@ interface UseFetchParams {
   contentType?: string;
   formData?: boolean;
   body?: any;
+  login?: boolean;
 }
 
 interface FetchError {
@@ -31,12 +32,15 @@ export const useFetch = ({
   contentType = 'application/json',
   formData = false,
   body = null,
+  login = false,
 }: UseFetchParams) => {
   const [data, setData] = useState<FetchData | null>(null);
   const [error, setError] = useState<FetchError | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchCompleted, setFetchCompleted] = useState<boolean>(false);
   const { setToken, token } = useAuthStore();
+
+  const router = useRouter();
 
   const executeFetch = async () => {
     setData(null);
@@ -57,10 +61,13 @@ export const useFetch = ({
         body: body ? (formData ? body : JSON.stringify(body)) : null,
       });
 
-      console.log('Status: ', response.status);
+      console.log('Status:', response.status);
 
       if (!response.ok) {
         const res = await response.json();
+
+        if (!login && response.status === 401) return router.replace('/(auth)/login');
+
         setError({ status: response.status, msg: res.message });
         return;
       }

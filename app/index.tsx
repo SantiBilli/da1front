@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
 export default function Index() {
-  console.log('Index page loaded');
+  // console.log('Index page loaded');
 
   const { data, error, isLoading } = useFetch({
     endpoint: '/authentications',

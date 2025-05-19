@@ -17,7 +17,7 @@ const specialtiesData = [
 ];
 
 const Home = () => {
-  console.log('Home component rendered');
+  // console.log('Home component rendered');
 
   const [searchText, setSearchText] = useState('');
   const [filteredSpecialties, setFilteredSpecialties] = useState(specialtiesData);

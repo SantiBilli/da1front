@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 
 const AuthLayout = () => {
-  console.log('AuthLayout component rendered');
+  // console.log('AuthLayout component rendered');
 
   return (
     <Stack>

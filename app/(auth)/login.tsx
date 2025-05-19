@@ -16,7 +16,7 @@ import { useAuthStore } from 'hooks/AuthStore';
 import { useFetch } from 'hooks/Fetch';
 
 const Login = () => {
-  console.log('Login component rendered');
+  // console.log('Login component rendered');
   const [mail, setMail] = useState('');
   const [contrasenia, setContrasena] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -32,6 +32,7 @@ const Login = () => {
     method: 'POST',
     trigger: trigger,
     sendToken: false,
+    login: true,
     body: {
       mail: mail,
       contrasenia: contrasenia,

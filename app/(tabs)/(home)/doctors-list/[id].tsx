@@ -15,7 +15,7 @@ interface propsMedico {
 }
 
 const medicosList = () => {
-  console.log('medicosList component rendered');
+  // console.log('medicosList component rendered');
 
   const [searchText, setSearchText] = useState('');
   const [filteredSpecialties, setFilteredSpecialties] = useState([]);

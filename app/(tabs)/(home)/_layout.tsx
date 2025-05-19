@@ -3,7 +3,7 @@ import React from 'react';
 import { Stack } from 'expo-router';
 
 const HomeLayout = () => {
-  console.log('HomeLayout component rendered');
+  // console.log('HomeLayout component rendered');
   return <Stack initialRouteName="home" screenOptions={{ headerShown: false }} />;
 };
 

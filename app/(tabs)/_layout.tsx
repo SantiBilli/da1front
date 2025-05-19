@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function TabsLayout() {
-  console.log('TabsLayout component rendered');
+  // console.log('TabsLayout component rendered');
 
   return (
     <Tabs

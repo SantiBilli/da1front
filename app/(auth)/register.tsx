@@ -6,7 +6,7 @@ import images from 'constants/images';
 import ConfirmButton from 'components/ConfirmButton';
 
 const Register = () => {
-  console.log('Register component rendered');
+  // console.log('Register component rendered');
 
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');

@@ -1,8 +1,9 @@
 import { View, Text } from 'react-native';
-import React from 'react';
+import { useEffect } from 'react';
 
 const Appointments = () => {
   console.log('Appointments component rendered');
+
   return (
     <View>
       <Text>Appointments</Text>

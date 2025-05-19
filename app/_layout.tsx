@@ -3,7 +3,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import '../global.css';
 
 export default function Layout() {
-  console.log('Layout component rendered');
+  // console.log('Layout component rendered');
 
   return (
     <SafeAreaProvider>
