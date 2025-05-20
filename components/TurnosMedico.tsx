@@ -32,6 +32,7 @@ const TurnosMedico = ({ id_usuario }: propsMedico) => {
       {dias.map(({ fecha }) => (
         <HorariosMedico key={fecha} dia={fecha} />
       ))}
+      {dias.length == 0 && <Text>No hay turnos disponibles.</Text>}
     </View>
   );
 };

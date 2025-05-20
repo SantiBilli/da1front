@@ -42,7 +42,11 @@ const ConfirmarTurno = () => {
           </Text>
         </Text>
       )}
-      <ConfirmButton onPress={handlePress} title="Confirmar Turno" />
+      <ConfirmButton
+        onPress={handlePress}
+        title="Confirmar Turno"
+        disabled={idTurnoSeleccionado == '' ? true : false}
+      />
     </View>
   );
 };
