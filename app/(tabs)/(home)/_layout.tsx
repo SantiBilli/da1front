@@ -1,10 +1,24 @@
+import { Slot, useFocusEffect, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import { View, Text } from 'react-native';
 import React from 'react';
 import { Stack } from 'expo-router';
 
-const HomeLayout = () => {
-  // console.log('HomeLayout component rendered');
-  return <Stack initialRouteName="home" screenOptions={{ headerShown: false }} />;
-};
+export default function HomeLayout() {
+  const router = useRouter();
 
-export default HomeLayout;
+  useFocusEffect(
+    useCallback(() => {
+      router.replace('/(home)/home'); // Ruta inicial del stack (home)
+    }, [])
+  );
+
+  return <Slot />;
+}
+
+// const HomeLayout = () => {
+//   // console.log('HomeLayout component rendered');
+//   return <Stack initialRouteName="home" screenOptions={{ headerShown: false }} />;
+// };
+
+// export default HomeLayout;

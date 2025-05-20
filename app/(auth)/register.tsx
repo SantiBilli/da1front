@@ -1,9 +1,10 @@
 import { View, Text, ScrollView, Image, KeyboardAvoidingView, Platform } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormTextInput from 'components/FormTextInput';
 import { useRouter } from 'expo-router';
 import images from 'constants/images';
 import ConfirmButton from 'components/ConfirmButton';
+import { useFetch } from 'hooks/Fetch';
 
 const Register = () => {
   // console.log('Register component rendered');
@@ -14,9 +15,63 @@ const Register = () => {
   const [contrasena, setContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(false);
+
+  const [trigger, setTrigger] = useState(false);
+
   const router = useRouter();
 
-  // +20 SIN EL SAFE AREA VIEW EN LAS PELOTAS
+  const { data, error, isLoading } = useFetch({
+    endpoint: '/registers',
+    method: 'POST',
+    trigger: trigger,
+    sendToken: false,
+    login: true,
+    body: {
+      mail: mail,
+      contrasenia: contrasena,
+      nombre: nombre,
+      apellido: apellido,
+    },
+  });
+
+  const handlePress = async () => {
+    setInvalidCredentials(false);
+    setPasswordMatch(false);
+    if (contrasena !== confirmarContrasena) {
+      setPasswordMatch(true);
+      return;
+    }
+    setTrigger(true);
+  };
+
+  useEffect(() => {
+    if (trigger) return setTrigger(false);
+  }, [trigger]);
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+
+    if (data.status === 201) {
+      router.push('/(auth)/login');
+    }
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    if (error != null) {
+      if (error.status === 409) return setInvalidCredentials(true);
+      if (error.status === 500) return router.replace('/oops');
+    }
+  }, [error]);
+
+  const disableButton =
+    nombre === '' ||
+    apellido === '' ||
+    mail === '' ||
+    contrasena === '' ||
+    confirmarContrasena === '' ||
+    isLoading;
 
   return (
     <KeyboardAvoidingView
@@ -26,8 +81,8 @@ const Register = () => {
       <View className="absolute left-[-52px] top-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] top-[-160px] h-[250px] w-[250px] rounded-full bg-primary" />
       <View className="flex-1 items-center justify-center">
-        <Image source={images.logo} className="mb-[50px] mt-[60px] h-[70px] w-[70px]" />
-        <Text className="mb-[50px] text-[32px] text-primary">¡Registrate ahora!</Text>
+        <Image source={images.logo} className="mb-[30px] mt-[60px] h-[70px] w-[70px]" />
+        <Text className="mb-[30px] text-[32px] text-primary">¡Registrate ahora!</Text>
         <View className="flex w-full gap-[17px]">
           <FormTextInput title="Nombre" value={nombre} handleChangeText={setNombre} />
           <FormTextInput title="Apellido" value={apellido} handleChangeText={setApellido} />
@@ -47,7 +102,13 @@ const Register = () => {
         </View>
 
         <View className="mt-10 flex items-center justify-center gap-5">
-          <ConfirmButton title={'Crear Cuenta'} onPress={() => router.replace('/(auth)/login')} />
+          {invalidCredentials && (
+            <Text className="text-[12px] text-red-500">Emial ya registrado.</Text>
+          )}
+          {passwordMatch && (
+            <Text className="text-[12px] text-red-500">Las contraseñas no coinciden.</Text>
+          )}
+          <ConfirmButton title={'Crear Cuenta'} onPress={handlePress} disabled={disableButton} />
 
           <Text className="text-[12px] text-primary" onPress={() => router.push('/(auth)/login')}>
             Iniciar Sesion
