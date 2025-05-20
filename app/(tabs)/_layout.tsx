@@ -1,10 +1,12 @@
-import { Stack, Tabs } from 'expo-router';
+import { Stack, Tabs, useRouter } from 'expo-router';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function TabsLayout() {
   // console.log('TabsLayout component rendered');
+
+  const router = useRouter();
 
   return (
     <Tabs
@@ -30,6 +32,12 @@ export default function TabsLayout() {
         options={{
           title: 'Buscar',
           tabBarIcon: ({ color }) => <Icon size={28} name="search" color={color} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace('/(home)/home'); // Reemplaza por la ruta inicial
+          },
         }}
       />
       <Tabs.Screen

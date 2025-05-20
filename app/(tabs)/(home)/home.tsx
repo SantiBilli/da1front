@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import icons from 'constants/icons';
 import { useAuthStore } from 'hooks/AuthStore';
 
