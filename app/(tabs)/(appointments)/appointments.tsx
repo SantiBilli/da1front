@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useAuthStore } from 'hooks/AuthStore';
 
 const Appointments = () => {
   console.log('Appointments component rendered');

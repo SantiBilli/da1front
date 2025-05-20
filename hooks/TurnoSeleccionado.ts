@@ -1,4 +1,3 @@
-// stores/useTurnoStore.ts
 import { create } from 'zustand';
 
 type TurnoStore = {
