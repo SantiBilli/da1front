@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useFetch } from 'hooks/Fetch';
@@ -21,15 +21,16 @@ const HorariosMedico = ({ dia }: propsMedico) => {
 
   const { setDia, setHora, setIdTurno, idTurnoSeleccionado, resetTurno } = useTurnoStore();
 
-  const fecha = new Date(dia);
-
-  const formateada = new Intl.DateTimeFormat('es-ES', {
+  //Formatear Fecha
+  // const fecha = new Date(dia);
+  const [anio, mes, dia1] = dia.split('-').map(Number);
+  const fecha = new Date(anio, mes - 1, dia1); // Mes 0
+  const fechaFormateada = fecha.toLocaleDateString('es-ES', {
+    timeZone: 'America/Argentina/Buenos_Aires',
     weekday: 'long',
-    day: 'numeric',
     month: 'long',
-  }).format(fecha);
-
-  const resultado = formateada.charAt(0).toUpperCase() + formateada.slice(1);
+    day: 'numeric',
+  });
 
   const [trigger, setTrigger] = useState(false);
 
@@ -62,7 +63,7 @@ const HorariosMedico = ({ dia }: propsMedico) => {
   return (
     <View className="rounded-[10px] border-[1px] border-primary">
       <View className="flex h-[40px] flex-row items-center justify-between px-4">
-        <Text className="text-[15px] text-primary">{resultado}</Text>
+        <Text className="text-[15px] text-primary">{fechaFormateada}</Text>
         {open ? (
           <Icon name="keyboard-arrow-up" size={20} color="#00BFFF" onPress={() => setOpen(!open)} />
         ) : (
@@ -74,22 +75,25 @@ const HorariosMedico = ({ dia }: propsMedico) => {
           />
         )}
       </View>
-      {open && (
-        <View className="flex-row flex-wrap gap-2 p-5">
-          {horarios.map(({ hora, id_turno }) => (
-            <TouchableOpacity
-              key={id_turno}
-              className={`flex h-[25px] w-[45px] items-center justify-center rounded-md px-1 py-2 ${idTurnoSeleccionado === id_turno ? 'bg-primary' : 'bg-[#84D7A3A6]'}`}
-              onPress={() => {
-                setDia(dia);
-                setHora(hora);
-                setIdTurno(id_turno);
-              }}>
-              <Text className="flex text-[10px] text-black">{hora.slice(0, 5)}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
+      {open &&
+        (!isLoading ? (
+          <View className="flex-row flex-wrap gap-2 p-5">
+            {horarios.map(({ hora, id_turno }) => (
+              <TouchableOpacity
+                key={id_turno}
+                className={`flex h-[25px] w-[45px] items-center justify-center rounded-md px-1 py-2 ${idTurnoSeleccionado === id_turno ? 'bg-primary' : 'bg-[#84D7A3A6]'}`}
+                onPress={() => {
+                  setDia(dia);
+                  setHora(hora);
+                  setIdTurno(id_turno);
+                }}>
+                <Text className="flex text-[10px] text-black">{hora.slice(0, 5)}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <ActivityIndicator size="small" color="#3AB4E5" className="p-5" />
+        ))}
     </View>
   );
 };
