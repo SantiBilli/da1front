@@ -1,10 +1,41 @@
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView } from 'react-native';
 import React from 'react';
+import ConfirmButton from '../../components/ConfirmButton';
+import FormTextInput from '../../components/FormTextInput';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
 
 const OlvidasteContrasenia = () => {
+  const [mail, setMail] = useState('');
+  const router = useRouter();
+
+  const handlePress = () => {
+    console.log('Enviar correo')
+    router.push('/(recovery)/insertToken');
+  }
+
   return (
-    <View>
-      <Text>OlvidasteContrasenia</Text>
+    <View className="flex-1 bg-background">
+      <View className="absolute left-[-52px] top-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
+      <View className="absolute right-[-50px] top-[-160px] h-[250px] w-[250px] rounded-full bg-primary" />
+      <KeyboardAvoidingView className="flex-1 items-center justify-center">
+        <Text className="mb-[20px] text-[25px] text-primary font-bold">¿Olvidaste tu contraseña?</Text>
+        <Text className="text-[16px] text-primary text-center w-[277px]">
+          Ingrese el correo electronico asociado{'\n'} a su cuenta para cambiar su{'\n'} contraseña.
+        </Text>
+        <View className="my-9 flex w-full gap-[60px]">
+          <FormTextInput 
+            title='Mail'
+            value={mail}
+            handleChangeText={setMail}
+          />
+        </View>
+        <View className='my-9' style={{ width: 300 }}>
+          <ConfirmButton title='Enviar correo' onPress={handlePress} disabled={(mail == '')}/>
+        </View>
+      </KeyboardAvoidingView>
+      <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
+      <View className="absolute right-[-50px] bottom-[-135px] h-[250px] w-[250px] rounded-full bg-primary" />
     </View>
   );
 };
