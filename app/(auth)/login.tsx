@@ -113,7 +113,11 @@ const Login = () => {
             disabled={(mail == '' && contrasenia == '') || isLoading}
           />
           <TouchableOpacity>
-            <Text className="text-[14px] text-primary">Olvidaste tu contraseña?</Text>
+            <Text 
+              className="text-[14px] text-primary" 
+              onPress={() => router.push('/(recovery)/olvidasteContrasenia')}>
+                Olvidaste tu contraseña?
+            </Text>
           </TouchableOpacity>
           <Text
             className="text-[12px] text-primary"
