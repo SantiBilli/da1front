@@ -2,7 +2,24 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
-const CardTurno = () => {
+interface Props {
+    nombre: string;
+    apellido: string;
+    especialidad: string;
+    dia: string;
+    hora: string;
+    id_turno: string;
+    pfp: string
+}
+
+const CardTurno = (
+    {nombre, apellido, especialidad, dia, hora, id_turno, pfp}: Props
+) => {
+
+
+  const fecha = new Date(dia); 
+  const fechaFormateada = new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(fecha);
+
     return(
         <TouchableOpacity>
             <LinearGradient
@@ -21,24 +38,23 @@ const CardTurno = () => {
             }}>
                 <View className="flex w-[100px] items-center justify-center ">
                     <Image
-                        source={require('../assets/images/logo.png')} //cambiar por la imagen del doctor
-                        className="h-[60px] w-[60px] rounded-full border-[1px] border-primary"
-                    />
+                        source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}/imagen-medico/${pfp}` }}
+                        className="h-[60px] w-[60px] rounded-full border-[1px] border-primary"/>
                 </View>
                 <View className='flex-1 gap-4'>
                     <Text className="text-[15px]  text-primary">
                         Dr/a.{' '}
                         <Text className="text-black">
-                            Nombre Apellido
+                            {nombre} {apellido}
                         </Text>
                     </Text>
                     <View className="justi flex-row items-center gap-2">
                         <Icons name="local-hospital" color={'#3AB4E5'} size={20} />
-                        <Text className="text-[15px] text-black">Especialidad</Text>
+                        <Text className="text-[15px] text-black">{especialidad}</Text>
                     </View>
                     <View className="flex-row items-center gap-2">
                         <Icons name='calendar-month' color={'#3AB4E5'} size={20} />
-                        <Text className="text-[15px] text-black">Fecha y Hora</Text>
+                        <Text className="text-[15px] text-black">{fechaFormateada} {hora.slice(11,16)}hs</Text>
                     </View>
                 </View>
             </LinearGradient>

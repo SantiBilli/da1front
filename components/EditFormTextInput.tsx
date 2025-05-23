@@ -11,6 +11,8 @@ interface props {
   textInputStyle?: string;
   maxLength?: number;
   editable?: boolean;
+  editing?: boolean;
+  setEditing?: (editing: boolean) => void;
 }
 
 const EditFormTextInput = ({
@@ -22,8 +24,9 @@ const EditFormTextInput = ({
   textInputStyle,
   maxLength,
   editable = true,
+  editing,
+  setEditing = () => {},
 }: props) => {
-  const [editing, setEditing] = useState(false);
   useEffect(() => {
     handleChangeText('');
   }, [editing]);

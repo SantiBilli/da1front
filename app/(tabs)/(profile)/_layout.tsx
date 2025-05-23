@@ -4,7 +4,13 @@ import { Stack } from 'expo-router';
 
 const ProfileLayuout = () => {
   // console.log('ProfileLayuout component rendered');
-  return <Stack initialRouteName="profile" screenOptions={{ headerShown: false }} />;
+  return (
+  <Stack initialRouteName="profile" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="historial" options={{ headerShown: false }} />
+      <Stack.Screen name="changePasswordProfile" options={{ headerShown: false }} />
+    </Stack>
+    
+  );
 };
 
 export default ProfileLayuout;
