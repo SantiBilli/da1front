@@ -15,10 +15,10 @@ const OlvidasteContrasenia = () => {
   }
 
   return (
-    <View className="flex-1 bg-background">
+    <KeyboardAvoidingView behavior='padding' className="flex-1 bg-background">
       <View className="absolute left-[-52px] top-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] top-[-160px] h-[250px] w-[250px] rounded-full bg-primary" />
-      <KeyboardAvoidingView className="flex-1 items-center justify-center">
+      <View className="flex-1 items-center justify-center">
         <Text className="mb-[20px] text-[25px] text-primary font-bold">¿Olvidaste tu contraseña?</Text>
         <Text className="text-[16px] text-primary text-center w-[277px]">
           Ingrese el correo electronico asociado{'\n'} a su cuenta para cambiar su{'\n'} contraseña.
@@ -33,10 +33,10 @@ const OlvidasteContrasenia = () => {
         <View className='my-9' style={{ width: 300 }}>
           <ConfirmButton title='Enviar correo' onPress={handlePress} disabled={(mail == '')}/>
         </View>
-      </KeyboardAvoidingView>
+      </View>
       <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] bottom-[-135px] h-[250px] w-[250px] rounded-full bg-primary" />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
