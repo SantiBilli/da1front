@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface props {
   title: string;
@@ -17,35 +17,39 @@ const EditFormTextInput = ({
   title,
   actualValue,
   value,
-  handleChangeText=() => {},
+  handleChangeText = () => {},
   otherStyles,
   textInputStyle,
   maxLength,
   editable = true,
 }: props) => {
-
   const [editing, setEditing] = useState(false);
   useEffect(() => {
-    handleChangeText("");
+    handleChangeText('');
   }, [editing]);
 
   return (
     <View className="w-full px-7">
       <Text className={`text-[15px] text-primary ${textInputStyle}`}>{title}</Text>
       <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
-        <Text className='text-[15px] py-1'>{actualValue}</Text>
-        {editable && <TouchableOpacity onPress={() => setEditing(!editing)}>
-          <Icon name="pencil" size={19} color="#b2b2b2"/>
-        </TouchableOpacity>}
+        <Text className="py-1 text-[15px]">{actualValue}</Text>
+        {editable && (
+          <TouchableOpacity onPress={() => setEditing(!editing)}>
+            <Icon name="pencil" size={19} color="#b2b2b2" />
+          </TouchableOpacity>
+        )}
       </View>
-      { editing && <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
+      {editing && (
+        <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
           <TextInput
-            className={`flex-1 text-[14px] ${otherStyles}`}
+            className={`flex-1 py-2 text-[14px] ${otherStyles}`}
             value={value}
             onChangeText={(text) => handleChangeText(text)}
             maxLength={maxLength}
-            />
-      </View>}
+            placeholder={`Nuevo ${title.toLowerCase()}...`}
+          />
+        </View>
+      )}
     </View>
   );
 };
