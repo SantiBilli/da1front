@@ -91,17 +91,6 @@ const medicosList = () => {
                 pfp={medico.pfp}
               />
             ))}
-            {filteredSpecialties.map((medico: propsMedico) => (
-              <CardListamedicoes
-                key={medico.id_usuario}
-                nombre={medico.nombre}
-                apellido={medico.apellido}
-                disponibilidad={medico.disponibilidad}
-                direccion={medico.direccion}
-                id_medico={medico.id_usuario}
-                pfp={medico.pfp}
-              />
-            ))}
           </View>
         </ScrollView>
       </View>
