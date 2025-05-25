@@ -6,34 +6,32 @@ import ModalObraSocial from './ModalObraSocial';
 
 interface props {
   title: string;
-  actualValue: string;
-  value?: string;
-  handleChangeText?: (text: string) => void;
-  otherStyles?: string;
   textInputStyle?: string;
-  maxLength?: number;
+  userObraSocial: string | null;
+  userPlan: string | null;
+  userNroAfiliado: string | null;
+  setShowModalSave: (trigger: boolean) => void;
 }
 
 const ObraSocialInput = ({
   title,
-  actualValue,
-  value,
-  handleChangeText = () => {},
-  otherStyles,
   textInputStyle,
-  maxLength,
+  userObraSocial,
+  userPlan,
+  userNroAfiliado,
+  setShowModalSave,
 }: props) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [obraSocial, setObraSocial] = useState('');
-  const [plan, setPlan] = useState('');
-  const [nroAfiliado, setNroAfiliado] = useState('');
 
   return (
     <>
       <View className="w-full px-7">
         <Text className={`text-[15px] text-primary ${textInputStyle}`}>{title}</Text>
         <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
-          <Text className="py-1 text-[15px]">{actualValue}</Text>
+          <Text className="py-1 text-[15px]">
+            {userNroAfiliado} {userNroAfiliado && '|'} {userObraSocial} {userNroAfiliado && '|'}{' '}
+            {userPlan}
+          </Text>
           <TouchableOpacity onPress={() => setModalOpen(!modalOpen)}>
             <Icon name="credit-card" size={19} color="#b2b2b2" />
           </TouchableOpacity>
@@ -42,12 +40,7 @@ const ObraSocialInput = ({
       <ModalObraSocial
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
-        nroAfiliado={nroAfiliado}
-        obraSocial={obraSocial}
-        plan={plan}
-        setNroAfiliado={setNroAfiliado}
-        setObraSocial={setObraSocial}
-        setPlan={setPlan}
+        setShowModalSave={setShowModalSave}
       />
     </>
   );
