@@ -9,7 +9,7 @@ export default function HomeLayout() {
 
   useFocusEffect(
     useCallback(() => {
-      router.replace('/(home)/home'); // Ruta inicial del stack (home)
+      router.replace('/(home)/home');
     }, [])
   );
 
