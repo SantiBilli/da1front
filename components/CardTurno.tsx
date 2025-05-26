@@ -1,4 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
@@ -15,13 +16,12 @@ interface Props {
 const CardTurno = (
     {nombre, apellido, especialidad, dia, hora, id_turno, pfp}: Props
 ) => {
-
-
-  const fecha = new Date(dia); 
-  const fechaFormateada = new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(fecha);
+    const router = useRouter();
+    const fecha = new Date(dia.replace('Z', '')); 
+    const fechaFormateada = new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(fecha);
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push(`(appointments)/appointment-details/${id_turno}`)}>
             <LinearGradient
             colors={['#45CADE4D', '#A0E8EB4D', '#FFFFFF4D']}
             locations={[0.0, 0.5, 1.0]}
