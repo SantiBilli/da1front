@@ -122,6 +122,7 @@ const ProfilePicture = ({ pfp, setPfp }: { pfp: string | null; setPfp: (pfp: str
         modalOpen={showModalSave}
         setModalOpen={setShowModalSave}
         title="¡Los cambios se han guardado exitosamente!"
+        closable={false}
       />
     </View>
   );
