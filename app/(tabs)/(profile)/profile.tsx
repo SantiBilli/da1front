@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfilePicture from 'components/PfpEdit';
@@ -9,6 +9,7 @@ import ConfirmButton from 'components/ConfirmButton';
 import { useFetch } from 'hooks/Fetch';
 import PopUpModal from 'components/PopUpModal';
 import Splash from 'app/splash';
+import * as ImagePicker from 'expo-image-picker';
 
 interface UserData {
   id_usuario: string;
@@ -31,6 +32,10 @@ interface UserData {
 
 const Profile = () => {
   const [primeraCarga, setPrimeraCarga] = useState(true);
+
+  const [selectedImage, setSelectedImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
+
+  const [pfp, setPfp] = useState<string | null>(null);
 
   const [nombreOpen, setNombreOpen] = useState(false);
   const [apellidoOpen, setApellidoOpen] = useState(false);
@@ -62,6 +67,8 @@ const Profile = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
+
+    setPfp(data.data.pfp);
     setUserdata(data.data);
     setPrimeraCarga(false);
   }, [data, isLoading]);
@@ -120,65 +127,67 @@ const Profile = () => {
             <Icon name="logout" size={17} color="#b2b2b2" />
           </TouchableOpacity>
         </View>
-        <ProfilePicture pfp={userdata.pfp} />
-        <View className="mt-[30px] gap-5">
-          <EditFormTextInput
-            title="Nombre"
-            actualValue={userdata.nombre}
-            value={nombre}
-            handleChangeText={setNombre}
-            maxLength={20}
-            editing={nombreOpen}
-            setEditing={setNombreOpen}
-          />
-          <EditFormTextInput
-            title="Apellido"
-            actualValue={userdata.apellido}
-            value={apellido}
-            handleChangeText={setApellido}
-            maxLength={20}
-            editing={apellidoOpen}
-            setEditing={setApellidoOpen}
-          />
-          <EditFormTextInput title="Mail" actualValue={userdata.mail} editable={false} />
-          <ObraSocialInput
-            title="Obra Social"
-            userObraSocial={userdata.afiliaciones?.obras_sociales?.nombre ?? null}
-            userPlan={userdata.afiliaciones?.planes_obras_sociales?.nombre_plan ?? null}
-            userNroAfiliado={userdata.afiliaciones?.nro_credencial ?? null}
-            setShowModalSave={setShowModalSave}
-          />
-
-          <View className="flex gap-4 px-[50px]">
-            {!disabled && (
-              <ConfirmButton
-                title="Guardar cambios"
-                onPress={() => setTrigger2(true)}
-                disabled={isLoading2}
-              />
-            )}
-            <ConfirmButton
-              title="Historial"
-              onPress={() => {
-                router.push('/(tabs)/(profile)/historial');
-              }}
+        <ScrollView className="flex-1">
+          <ProfilePicture pfp={pfp} setPfp={setPfp} />
+          <View className="mt-[30px] gap-5">
+            <EditFormTextInput
+              title="Nombre"
+              actualValue={userdata.nombre}
+              value={nombre}
+              handleChangeText={setNombre}
+              maxLength={20}
+              editing={nombreOpen}
+              setEditing={setNombreOpen}
             />
-          </View>
-          <View className="mt-2 gap-3 px-[50px]">
-            <TouchableOpacity>
-              <Text
-                className="text-[15px] text-primary"
+            <EditFormTextInput
+              title="Apellido"
+              actualValue={userdata.apellido}
+              value={apellido}
+              handleChangeText={setApellido}
+              maxLength={20}
+              editing={apellidoOpen}
+              setEditing={setApellidoOpen}
+            />
+            <EditFormTextInput title="Mail" actualValue={userdata.mail} editable={false} />
+            <ObraSocialInput
+              title="Obra Social"
+              userObraSocial={userdata.afiliaciones?.obras_sociales?.nombre ?? null}
+              userPlan={userdata.afiliaciones?.planes_obras_sociales?.nombre_plan ?? null}
+              userNroAfiliado={userdata.afiliaciones?.nro_credencial ?? null}
+              setShowModalSave={setShowModalSave}
+            />
+
+            <View className="flex gap-4 px-[50px]">
+              {!disabled && (
+                <ConfirmButton
+                  title="Guardar cambios"
+                  onPress={() => setTrigger2(true)}
+                  disabled={isLoading2}
+                />
+              )}
+              <ConfirmButton
+                title="Historial"
                 onPress={() => {
-                  router.push('/(tabs)/(profile)/changePasswordProfile');
-                }}>
-                Cambiar contraseña
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text className="text-[15px] text-[#ff373a]">Eliminar cuenta</Text>
-            </TouchableOpacity>
+                  router.push('/(tabs)/(profile)/historial');
+                }}
+              />
+            </View>
+            <View className="mt-2 gap-3 px-[50px]">
+              <TouchableOpacity>
+                <Text
+                  className="text-[15px] text-primary"
+                  onPress={() => {
+                    router.push('/(tabs)/(profile)/changePasswordProfile');
+                  }}>
+                  Cambiar contraseña
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text className="text-[15px] text-[#ff373a]">Eliminar cuenta</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </ScrollView>
         <PopUpModal
           modalOpen={showModalSave}
           setModalOpen={setShowModalSave}
