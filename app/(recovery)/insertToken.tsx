@@ -1,18 +1,19 @@
 import { View, Text, KeyboardAvoidingView } from 'react-native';
-import React from 'react';
 import ConfirmButton from '../../components/ConfirmButton';
 import FormTextInput from '../../components/FormTextInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 
 const InsertToken = () => {
   const [token, setToken] = useState('');
   const router = useRouter();
-
+  
   const handlePress = () => {
-    console.log('Validar token');
-    router.push('/(recovery)/changePassword');
-  };
+    router.push({
+      pathname: '/(recovery)/changePassword',
+      params: { token }
+    })
+  }
 
   return (
     <KeyboardAvoidingView behavior='padding' className="flex-1 bg-background">
@@ -24,7 +25,7 @@ const InsertToken = () => {
           <FormTextInput 
             title='Token'
             value={token}
-            handleChangeText={setToken}
+            handleChangeText={setToken} 
           />
         </View>
         <View className='my-9' style={{ width: 300 }}>
