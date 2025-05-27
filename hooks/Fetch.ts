@@ -50,14 +50,21 @@ export const useFetch = ({
 
     setIsLoading(true);
 
+    const headers: Record<string, string> = {};
+
+    if (!formData) {
+      headers['Content-Type'] = contentType;
+    }
+
+    if (sendToken) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     try {
       const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}${endpoint}`, {
         method,
         mode: 'cors',
-        headers: {
-          'Content-Type': contentType,
-          ...(sendToken ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        headers,
         body: body ? (formData ? body : JSON.stringify(body)) : null,
       });
 
@@ -75,6 +82,7 @@ export const useFetch = ({
       const res = await response.json();
       setData({ status: response.status, msg: res.message, data: res.data });
     } catch (err) {
+      console.log(err);
       router.replace('/oops');
     } finally {
       setIsLoading(false);
