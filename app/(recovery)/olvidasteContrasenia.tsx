@@ -1,17 +1,42 @@
-import { View, Text, KeyboardAvoidingView } from 'react-native';
-import React from 'react';
+import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import ConfirmButton from '../../components/ConfirmButton';
 import FormTextInput from '../../components/FormTextInput';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
+import { useFetch } from 'hooks/Fetch';
 
 const OlvidasteContrasenia = () => {
   const [mail, setMail] = useState('');
   const router = useRouter();
+  const [trigger, setTrigger] = useState(false);
+
+  const { data, error, isLoading } = useFetch({
+    endpoint: '/forgot-password',
+    method: 'POST',
+    trigger: trigger,
+    sendToken: false,
+    body: {
+      mail: mail,
+    },
+  });
+
+  useEffect(() => {
+    if (trigger) return setTrigger(false);
+  }, [trigger]);
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+    if (data.status === 200) router.push('/(recovery)/insertToken');
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    if (error) {
+      if (error.status === 500) return router.replace('/oops');
+    }
+  }, [error]);
 
   const handlePress = () => {
-    console.log('Enviar correo')
-    router.push('/(recovery)/insertToken');
+    setTrigger(true);
   }
 
   return (
@@ -33,6 +58,13 @@ const OlvidasteContrasenia = () => {
         <View className='my-9' style={{ width: 300 }}>
           <ConfirmButton title='Enviar correo' onPress={handlePress} disabled={(mail == '')}/>
         </View>
+        <TouchableOpacity>
+          <Text 
+            className="text-[14px] text-primary" 
+            onPress={() => router.push('/(recovery)/insertToken')}>
+              Ingresar token
+          </Text>
+        </TouchableOpacity>
       </View>
       <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] bottom-[-135px] h-[250px] w-[250px] rounded-full bg-primary" />

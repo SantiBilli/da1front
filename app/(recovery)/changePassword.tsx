@@ -1,18 +1,45 @@
 import { View, Text, KeyboardAvoidingView } from 'react-native';
-import React from 'react';
 import ConfirmButton from '../../components/ConfirmButton';
 import FormTextInput from '../../components/FormTextInput';
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useState, useEffect } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFetch } from 'hooks/Fetch';
 
 const ChangePassword = () => {
+  const { token } = useLocalSearchParams();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
+  const [trigger, setTrigger] = useState(false);
+
+  const { data, error, isLoading } = useFetch({
+    endpoint: `/reset-password/${token}`,
+    method: 'POST',
+    trigger: trigger,
+    sendToken: false,
+    body: {
+      contrasenia: newPassword,
+    },
+  });
+
+  useEffect(() => {
+    if (trigger) return setTrigger(false);
+  }, [trigger]);
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+    if (data.status === 200) router.replace('/(auth)/login');
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    if (error) {
+      if (error.status === 498) return router.replace('/(recovery)/olvidasteContrasenia');
+      if (error.status === 500) return router.replace('/oops');
+    }
+  }, [error]);
 
   const handlePress = () => {
-    console.log('Cambiar contraseña');
-    router.replace('/(auth)/login');
+    setTrigger(true);
   };
 
   return (
@@ -38,7 +65,7 @@ const ChangePassword = () => {
           />
         </View>
         <View className='my-9' style={{ width: 300 }}>
-          <ConfirmButton title='Cambiar contraseña' onPress={handlePress} disabled={(newPassword == '' || confirmPassword == '')}></ConfirmButton>
+          <ConfirmButton title='Cambiar contraseña' onPress={handlePress} disabled={(newPassword == '' || confirmPassword == '' || newPassword !== confirmPassword)}></ConfirmButton>
         </View>
       </View>
       <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
