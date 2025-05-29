@@ -82,6 +82,7 @@ const Appointments = () => {
               hora= {turno.hora}
               id_turno= {turno.id_turno}
               pfp= {turno.info_medico.pfp}
+              onPress={() => router.push(`(appointments)/appointment-details/${turno.id_turno}`)}
             />
           ))}
         </View>

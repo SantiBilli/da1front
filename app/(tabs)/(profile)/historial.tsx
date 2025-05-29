@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useFetch } from 'hooks/Fetch';
 import CardTurno from 'components/CardTurno';
+import { useRouter } from 'expo-router';
 
 interface Medico {
     nombre: string;
@@ -20,6 +21,7 @@ interface Turno {
 const Historial = () => {
 
     const [turnos, setTurnos] = useState([]);
+    const router = useRouter();
 
 
     const [trigger, setTrigger] = useState(true);
@@ -59,6 +61,7 @@ const Historial = () => {
                 nombre={turno.info_medico.nombre}
                 apellido={turno.info_medico.apellido}
                 pfp={turno.info_medico.pfp}
+                onPress={() => router.push(`/(tabs)/(profile)/historial/${turno.id_turno}`)}
               />
             ))}
         </View>

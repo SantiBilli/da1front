@@ -50,6 +50,7 @@ const Profile = () => {
     afiliaciones: null,
   });
   const [showModalSave, setShowModalSave] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
 
   const router = useRouter();
 
@@ -111,6 +112,28 @@ const Profile = () => {
       return () => clearTimeout(timer);
     }
   }, [showModalSave]);
+
+  const [trigger3, setTrigger3] = useState(false);
+  const {
+    data: data3,
+    error: error3,
+    isLoading: isLoading3,
+  } = useFetch({
+    endpoint: '/profiles',
+    method: 'DELETE',
+    trigger: trigger3,
+    sendToken: true,
+  });
+
+  useEffect(() => {
+    if (trigger3) return setTrigger3(false);
+  }, [trigger3]);
+
+  useEffect(() => {
+    if (isLoading3 || !data3) return;
+    if(data3.status === 200) return router.replace('/(auth)/login');
+  }, [data3, isLoading3]);
+
 
   if (isLoading && primeraCarga) {
     return <Splash />;
@@ -182,7 +205,7 @@ const Profile = () => {
                   Cambiar contraseña
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowModalDelete(true)}>
                 <Text className="text-[15px] text-[#ff373a]">Eliminar cuenta</Text>
               </TouchableOpacity>
             </View>
@@ -192,6 +215,14 @@ const Profile = () => {
           modalOpen={showModalSave}
           setModalOpen={setShowModalSave}
           title="¡Los cambios se han guardado exitosamente!"
+        />
+        <PopUpModal
+        modalOpen={showModalDelete}
+        setModalOpen={setShowModalDelete}
+        title="¿Desea eliminar su cuenta?"
+        pressable={true}
+        onPress={() => setTrigger3(true)}
+        isLoading={isLoading3}
         />
       </View>
     );

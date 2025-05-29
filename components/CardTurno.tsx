@@ -10,18 +10,19 @@ interface Props {
     dia: string;
     hora: string;
     id_turno: string;
-    pfp: string
+    pfp: string;
+    onPress: () => void
 }
 
 const CardTurno = (
-    {nombre, apellido, especialidad, dia, hora, id_turno, pfp}: Props
+    {nombre, apellido, especialidad, dia, hora, id_turno, pfp, onPress}: Props
 ) => {
     const router = useRouter();
     const fecha = new Date(dia.replace('Z', '')); 
     const fechaFormateada = new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(fecha);
 
     return(
-        <TouchableOpacity onPress={() => router.push(`(appointments)/appointment-details/${id_turno}`)}>
+        <TouchableOpacity onPress={onPress}>
             <LinearGradient
             colors={['#45CADE4D', '#A0E8EB4D', '#FFFFFF4D']}
             locations={[0.0, 0.5, 1.0]}
