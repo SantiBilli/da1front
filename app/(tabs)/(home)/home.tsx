@@ -37,7 +37,7 @@ const Home = () => {
 
   return (
     <View className="flex-1 bg-background">
-      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
       <Text className="mb-4 mt-[70px] px-8 text-[20px] font-semibold text-primary">
         Especialidades
       </Text>

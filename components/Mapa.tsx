@@ -19,7 +19,6 @@ const Mapa = ({direccion}: Props) => {
           return;
         }
         const result = await Location.geocodeAsync(direccion);   
-        console.log(result);
         if (result.length > 0) {
           setCoords({
             latitude: result[0].latitude,

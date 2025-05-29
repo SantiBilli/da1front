@@ -82,7 +82,6 @@ const AppointmentDetails = () => {
         if (isLoading2 || !data2) return;
         setInfoTurno(data2.data.turno);
         setNotas(data2.data.notas);
-        console.log(data2.data.notas);
     }, [data2, isLoading2]);
 
     if (isLoading2) {
@@ -90,7 +89,7 @@ const AppointmentDetails = () => {
     } else 
     return (
         <View className="flex-1 bg-background">
-            <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+            <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
             <Text className="mb-4 mt-[70px] px-4 text-[20px] font-semibold text-primary">
                 Detalle
             </Text>
@@ -126,14 +125,14 @@ const AppointmentDetails = () => {
                 </View>
                  <Text className="text-[20px] font-semibold text-primary mt-[30px] px-[20px] mb-[20px]">Notas:</Text>
                  {notas.length > 0 ? notas.map((nota) => 
-                 <>
+                 <View key={nota.id_nota}>
                  <View className="mb-[25px]">
                   <View className="pb-[40px] items-center justify-center mx-[20px] rounded-[10px] border-[1.5px] border-secondary">
                     <Text className="text-[15px] mt-[10px] px-[20px] text-justify">{nota.nota}</Text>
                   </View>
                   <Text className="text-[15px] px-[20px] mt-[5px]">{nota.fecha.slice(0, 10)} {nota.fecha.slice(11, 16)}hs</Text>
                  </View>
-                  </>) 
+                  </View>) 
                   : <Text className="text-[15px] px-[20px]">No hay notas disponibles.</Text>}
                 
             </ScrollView>

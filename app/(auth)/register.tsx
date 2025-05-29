@@ -84,9 +84,9 @@ const Register = () => {
         <Image source={images.logo} className="mb-[30px] mt-[60px] h-[70px] w-[70px]" />
         <Text className="mb-[30px] text-[32px] text-primary">¡Registrate ahora!</Text>
         <View className="flex w-full gap-[17px]">
-          <FormTextInput title="Nombre" value={nombre} handleChangeText={setNombre} />
-          <FormTextInput title="Apellido" value={apellido} handleChangeText={setApellido} />
-          <FormTextInput title="Email" value={mail} handleChangeText={setMail} />
+          <FormTextInput title="Nombre" value={nombre} handleChangeText={setNombre} maxLength={49}/>
+          <FormTextInput title="Apellido" value={apellido} handleChangeText={setApellido} maxLength={49} />
+          <FormTextInput title="Email" value={mail} handleChangeText={setMail} maxLength={49} />
           <FormTextInput
             title="Contraseña"
             value={contrasena}

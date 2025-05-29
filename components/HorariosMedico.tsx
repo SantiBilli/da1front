@@ -65,12 +65,12 @@ const HorariosMedico = ({ dia }: propsMedico) => {
       <View className="flex h-[40px] flex-row items-center justify-between px-4">
         <Text className="text-[15px] text-primary">{fechaFormateada}</Text>
         {open ? (
-          <Icon name="keyboard-arrow-up" size={20} color="#00BFFF" onPress={() => setOpen(!open)} />
+          <Icon name="keyboard-arrow-up" size={20} color="#45cade" onPress={() => setOpen(!open)} />
         ) : (
           <Icon
             name="keyboard-arrow-down"
             size={20}
-            color="#00BFFF"
+            color="#45cade"
             onPress={() => setOpen(!open)}
           />
         )}

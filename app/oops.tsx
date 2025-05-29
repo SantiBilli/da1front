@@ -8,7 +8,7 @@ const Oops = () => {
 
   return (
     <View className="flex-1 items-center justify-center bg-background">
-      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
       <View className="flex-1 items-center justify-center gap-5">
         <Icons name="warning" size={80} color="#FF0000" />
         <View className="items-center gap-2">
@@ -19,7 +19,7 @@ const Oops = () => {
           Iniciar Sesion
         </Text>
       </View>
-      <View className="absolute -bottom-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+      <View className="absolute -bottom-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
     </View>
   );
 };

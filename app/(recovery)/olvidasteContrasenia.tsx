@@ -53,10 +53,11 @@ const OlvidasteContrasenia = () => {
             title='Mail'
             value={mail}
             handleChangeText={setMail}
+            maxLength={49}
           />
         </View>
         <View className='my-9' style={{ width: 300 }}>
-          <ConfirmButton title='Enviar correo' onPress={handlePress} disabled={(mail == '')}/>
+          <ConfirmButton title='Enviar correo' onPress={handlePress} disabled={(mail == ''|| isLoading)}/>
         </View>
         <TouchableOpacity>
           <Text 

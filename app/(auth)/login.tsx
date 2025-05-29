@@ -84,12 +84,13 @@ const Login = () => {
         <Image source={images.logo} className="mb-[50px] h-[70px] w-[70px]" />
         <Text className="mb-[50px] text-[32px] text-primary">Iniciar Sesión</Text>
         <View className="flex w-full gap-[60px]">
-          <FormTextInput title="Email" value={mail} handleChangeText={setMail} />
+          <FormTextInput title="Email" value={mail} handleChangeText={setMail} maxLength={49} />
           <FormTextInput
             title="Password"
             value={contrasenia}
             handleChangeText={setContrasena}
             isPassword={true}
+            maxLength={49}
           />
         </View>
 

@@ -24,25 +24,23 @@ const InsertToken = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
-    if (data.status === 200 && data.msg === 'Token valido') {
+    if (data.status === 200) {
       router.push({
         pathname: '/(recovery)/changePassword',
         params: { token: token },
       });
     }
-    if (data.status === 200 && data.msg === 'Token no valido') {
-      setInvalidToken(true);
-    }
   }, [data, isLoading]);
 
   useEffect(() => {
     if (error) {
-      if (error.status === 498) return router.replace('/(recovery)/olvidasteContrasenia');
+      if (error.status === 498) return setInvalidToken(true);
       if (error.status === 500) return router.replace('/oops');
     }
   }, [error]);
 
   const handlePress = async () => {
+    setInvalidToken(false);
     setTrigger(true);
   };
 
@@ -56,7 +54,8 @@ const InsertToken = () => {
           <FormTextInput 
             title='Token'
             value={token}
-            handleChangeText={setToken} 
+            handleChangeText={setToken}
+            maxLength={6} 
           />
         </View>
         <View className='my-9 gap-3' style={{ width: 300 }}>
@@ -65,7 +64,7 @@ const InsertToken = () => {
               El token no es valido
             </Text>
           )}
-          <ConfirmButton title='Validar token' onPress={handlePress} disabled={(token == '')}></ConfirmButton>
+          <ConfirmButton title='Validar token' onPress={handlePress} disabled={(token == '' || isLoading)}></ConfirmButton>
         </View>
       </View>
       <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />

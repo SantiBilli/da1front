@@ -65,7 +65,7 @@ const medicosList = () => {
   } else
     return (
       <View className="flex-1 bg-background">
-        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
         <Text className="mb-4 mt-[70px] px-8 text-[20px] font-semibold text-primary ">{id}</Text>
         <View className="flex items-center justify-center pb-3">
           <View className=" h-[50px] w-[340px] flex-row items-center rounded-[10px] border-[1px] border-[#B2B2B2] py-2 pl-4 pr-[30px] ">

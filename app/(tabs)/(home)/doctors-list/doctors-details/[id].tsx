@@ -54,7 +54,7 @@ const medicoDetail = () => {
   } else
     return (
       <View className="flex-1 bg-background px-4">
-        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-[#00BFFF]" />
+        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
         <Text className="mb-7 mt-[70px] px-4 text-[20px] font-semibold text-primary">Detalle</Text>
         <View className="gap-4 px-4">
           <Text className="text-[17px] text-primary">

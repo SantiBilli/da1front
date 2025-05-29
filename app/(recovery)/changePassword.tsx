@@ -4,6 +4,7 @@ import FormTextInput from '../../components/FormTextInput';
 import { useState, useEffect } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useFetch } from 'hooks/Fetch';
+import PopUpModal from 'components/PopUpModal';
 
 const ChangePassword = () => {
   const { token } = useLocalSearchParams();
@@ -11,6 +12,8 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
   const [trigger, setTrigger] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const { data, error, isLoading } = useFetch({
     endpoint: `/reset-password/${token}`,
@@ -28,7 +31,7 @@ const ChangePassword = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
-    if (data.status === 200) router.replace('/(auth)/login');
+    if (data.status === 200) return setShowModal(true);
   }, [data, isLoading]);
 
   useEffect(() => {
@@ -39,8 +42,24 @@ const ChangePassword = () => {
   }, [error]);
 
   const handlePress = () => {
+    setPasswordMatch(false);
+    if (newPassword !== confirmPassword) {
+      setPasswordMatch(true);
+      return;
+    }
     setTrigger(true);
   };
+
+  useEffect(() => {
+    if (showModal){
+      const timer = setTimeout(() => {
+        setShowModal(false);
+        router.replace('/(auth)/login');
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showModal]);
 
   return (
     <KeyboardAvoidingView behavior='padding' className="flex-1 bg-background">
@@ -54,6 +73,7 @@ const ChangePassword = () => {
             value={newPassword}
             handleChangeText={setNewPassword}
             isPassword={true}
+            maxLength={49}
           />
         </View>
         <View className="my-2 flex w-full gap-[60px]">
@@ -62,14 +82,19 @@ const ChangePassword = () => {
             value={confirmPassword}
             handleChangeText={setConfirmPassword}
             isPassword={true}
+            maxLength={49}
           />
         </View>
-        <View className='my-9' style={{ width: 300 }}>
-          <ConfirmButton title='Cambiar contraseña' onPress={handlePress} disabled={(newPassword == '' || confirmPassword == '' || newPassword !== confirmPassword)}></ConfirmButton>
+         {passwordMatch && (
+            <Text className="mt-3 text-[12px] text-red-500">Las contraseñas no coinciden.</Text>
+          )}
+        <View className='my-3' style={{ width: 300 }}>
+          <ConfirmButton title='Cambiar contraseña' onPress={handlePress} disabled={(newPassword == '' || confirmPassword == '' || isLoading)}></ConfirmButton>
         </View>
       </View>
       <View className="absolute left-[-52px] bottom-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] bottom-[-135px] h-[250px] w-[250px] rounded-full bg-primary" />
+    <PopUpModal title='Su contraseña se ha cambiado exitosamente.' closable={false} modalOpen={showModal} setModalOpen={setShowModal} />
     </KeyboardAvoidingView>
   );
 };
