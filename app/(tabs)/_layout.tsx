@@ -46,12 +46,24 @@ export default function TabsLayout() {
           title: 'Turnos',
           tabBarIcon: ({ color }) => <Icon size={28} name="calendar-month" color={color} />,
         }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace('/(appointments)/appointments'); // Reemplaza por la ruta inicial
+          },
+        }}
       />
       <Tabs.Screen
         name="(profile)"
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color }) => <Icon size={28} name="person" color={color} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace('/(profile)/profile'); // Reemplaza por la ruta inicial
+          },
         }}
       />
     </Tabs>
