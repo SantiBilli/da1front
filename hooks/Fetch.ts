@@ -68,7 +68,7 @@ export const useFetch = ({
         body: body ? (formData ? body : JSON.stringify(body)) : null,
       });
 
-      console.log('Status:', response.status);
+      console.log(method, endpoint, response.status);
 
       if (!response.ok) {
         const res = await response.json();

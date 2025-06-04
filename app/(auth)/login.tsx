@@ -63,7 +63,7 @@ const Login = () => {
 
     setToken(content.token);
 
-    router.replace('/(home)/home');
+    return router.replace('/verify-os');
   }, [data, isLoading]);
 
   useEffect(() => {
@@ -114,10 +114,10 @@ const Login = () => {
             disabled={(mail == '' && contrasenia == '') || isLoading}
           />
           <TouchableOpacity>
-            <Text 
-              className="text-[14px] text-primary" 
+            <Text
+              className="text-[14px] text-primary"
               onPress={() => router.push('/(recovery)/olvidasteContrasenia')}>
-                Olvidaste tu contraseña?
+              Olvidaste tu contraseña?
             </Text>
           </TouchableOpacity>
           <Text

@@ -10,6 +10,7 @@ export default function Layout() {
       <SafeAreaView className="flex-1 bg-background">
         <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="oops" />
+          <Stack.Screen name="verify-os" />
         </Stack>
       </SafeAreaView>
     </SafeAreaProvider>
