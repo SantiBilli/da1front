@@ -46,6 +46,16 @@ const Register = () => {
     setTrigger(true);
   };
 
+  const validateMail = (mail: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(mail).toLowerCase());
+  }
+
+  const validateSafePassword = (password: string) => {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return re.test(password);
+  }
+
   useEffect(() => {
     if (trigger) return setTrigger(false);
   }, [trigger]);
@@ -71,7 +81,10 @@ const Register = () => {
     mail === '' ||
     contrasena === '' ||
     confirmarContrasena === '' ||
-    isLoading;
+    isLoading ||
+    !validateMail(mail) ||
+    !validateSafePassword(contrasena) ||
+    contrasena !== confirmarContrasena;
 
   return (
     <KeyboardAvoidingView
@@ -103,7 +116,7 @@ const Register = () => {
 
         <View className="mt-10 flex items-center justify-center gap-5">
           {invalidCredentials && (
-            <Text className="text-[12px] text-red-500">Emial ya registrado.</Text>
+            <Text className="text-[12px] text-red-500">Email ya registrado.</Text>
           )}
           {passwordMatch && (
             <Text className="text-[12px] text-red-500">Las contraseñas no coinciden.</Text>

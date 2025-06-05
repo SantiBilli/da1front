@@ -29,7 +29,13 @@ const ChangePasswordProfile = () => {
       body: { contrasenia: newPassword, contraseniaActual: actualPassword },
     });
     
-    const disabled = actualPassword === '' || newPassword === '' || confirmPassword === '' || isLoading;
+    const validateSafePassword = (password: string) => {
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      return re.test(password);
+    }
+
+    const disabled = actualPassword === '' || newPassword === '' || confirmPassword === '' || isLoading || 
+    !validateSafePassword(newPassword) || newPassword !== confirmPassword;
 
   useEffect(() => {
     if (trigger) return setTrigger(false);

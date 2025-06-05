@@ -117,7 +117,7 @@ const Login = () => {
             <Text
               className="text-[14px] text-primary"
               onPress={() => router.push('/(recovery)/olvidasteContrasenia')}>
-              Olvidaste tu contraseña?
+              ¿Olvidaste tu contraseña?
             </Text>
           </TouchableOpacity>
           <Text
