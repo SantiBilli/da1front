@@ -4,9 +4,11 @@ import { useTurnoStore } from 'hooks/TurnoSeleccionado';
 import ConfirmButton from './ConfirmButton';
 import { useFetch } from 'hooks/Fetch';
 import { useRouter } from 'expo-router';
+import { useObraSocialStore } from 'hooks/ObraSocial';
 
 const ConfirmarTurno = () => {
   const { diaSeleccionado, horaSeleccionada, idTurnoSeleccionado } = useTurnoStore();
+  const { tieneObraSocial } = useObraSocialStore();
 
   const router = useRouter();
 
@@ -20,6 +22,7 @@ const ConfirmarTurno = () => {
   });
 
   const handlePress = () => {
+    if (!tieneObraSocial) return router.replace('/popup');
     setTrigger(true);
   };
 

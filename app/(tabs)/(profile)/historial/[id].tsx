@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Linking } from "react-native";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from "react";
 import { useFetch } from 'hooks/Fetch';
@@ -22,10 +22,16 @@ interface Turno {
     info_medico: DrInfo;
 }
 
+interface Imagen{
+    id_imagen: string;
+    imagen: string;
+}
+
 interface Notas{
     id_nota: string;
     nota: string;
     fecha: string;
+    imagenes: Imagen[];
 }
 
 const AppointmentDetails = () => {
@@ -33,7 +39,6 @@ const AppointmentDetails = () => {
     const { id } = useLocalSearchParams();
     const id_turno = Array.isArray(id) ? id[0] : id;
     const [trigger, setTrigger] = useState(false);
-    const [pfp, setPfp] = useState('');
     const [infoTurno, setInfoTurno] = useState<Turno>({estado: '', fecha: '', hora: '', id_turno: '', info_medico: {apellido: '', direccion: '', especialidad: '', nombre: '', pfp: ''}});
     const [notas, setNotas] = useState<Notas[]>([]);
 
@@ -129,6 +134,14 @@ const AppointmentDetails = () => {
                  <View className="mb-[25px]">
                   <View className="pb-[40px] items-center justify-center mx-[20px] rounded-[10px] border-[1.5px] border-secondary">
                     <Text className="text-[15px] mt-[10px] px-[20px] text-justify">{nota.nota}</Text>
+                    {nota.imagenes.length > 0 && 
+                    <View className="flex items-start w-full px-[20px] mt-[10px] gap-[5px]">
+                        {nota.imagenes.map((imagen)=> (
+                            <TouchableOpacity key={imagen.id_imagen} onPress={() => Linking.openURL(`${process.env.EXPO_PUBLIC_API_URL}/imagen-notas/${imagen.imagen}`)}>
+                            <Text className="text-[12px] text-primary underline">Ver imagen {nota.imagenes.indexOf(imagen) + 1} </Text>
+                        </TouchableOpacity>
+                        ))}
+                    </View>}
                   </View>
                   <Text className="text-[15px] px-[20px] mt-[5px]">{nota.fecha.slice(0, 10)} {nota.fecha.slice(11, 16)}hs</Text>
                  </View>

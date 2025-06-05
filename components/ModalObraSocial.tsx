@@ -5,6 +5,7 @@ import Icon2 from 'react-native-vector-icons/Fontisto';
 import ConfirmButton from './ConfirmButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useFetch } from 'hooks/Fetch';
+import { useObraSocialStore } from 'hooks/ObraSocial';
 
 interface props {
   modalOpen: boolean;
@@ -13,6 +14,7 @@ interface props {
 }
 
 const ModalObraSocial = ({ modalOpen, setModalOpen, setShowModalSave }: props) => {
+  const { setTieneObraSocial } = useObraSocialStore();
   const [obrasSociales, setObrasSociales] = useState<
     [{ nombre: string; id_obra_social: string }] | []
   >([]);
@@ -111,6 +113,7 @@ const ModalObraSocial = ({ modalOpen, setModalOpen, setShowModalSave }: props) =
   useEffect(() => {
     if (isLoading3 || !data3) return;
     handleClose();
+    setTieneObraSocial(true);
     setShowModalSave(true);
   }, [data3, isLoading3]);
 

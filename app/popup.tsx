@@ -7,7 +7,7 @@ const Popup = () => {
   const router = useRouter();
 
   const handlePress = () => {
-    return router.replace('/(tabs)/home');
+    return router.replace('/(tabs)/profile');
   };
 
   return (

@@ -3,8 +3,10 @@ import React, { useEffect } from 'react';
 import { useFetch } from 'hooks/Fetch';
 import { router } from 'expo-router';
 import Splash from './splash';
+import { useObraSocialStore } from 'hooks/ObraSocial';
 
 const verifyOs = () => {
+  const { setTieneObraSocial } = useObraSocialStore();
   const { data, error, isLoading } = useFetch({
     endpoint: '/validar-obra-social',
     method: 'GET',
@@ -14,6 +16,8 @@ const verifyOs = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
+
+    setTieneObraSocial(data.data.tieneObra);
 
     if (data.data.tieneObra) {
       return router.replace('/(tabs)/home');
