@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useFetch } from 'hooks/Fetch';
 import HorariosMedico from './HorariosMedico';
@@ -9,7 +9,7 @@ interface propsMedico {
 
 const TurnosMedico = ({ id_usuario }: propsMedico) => {
   const [trigger, setTrigger] = useState(true);
-  const [dias, setDias] = useState([]);
+  const [dias, setDias] = useState<[] | null>(null);
 
   const { data, error, isLoading } = useFetch({
     endpoint: `/fechas/${id_usuario}`,
@@ -29,10 +29,15 @@ const TurnosMedico = ({ id_usuario }: propsMedico) => {
 
   return (
     <View className="flex-1 gap-3">
-      {dias.map(({ fecha }) => (
-        <HorariosMedico key={fecha} dia={fecha} />
-      ))}
-      {dias.length == 0 && <Text>No hay turnos disponibles.</Text>}
+      {dias ? (
+        dias.length == 0 ? (
+          <Text>No hay turnos disponibles.</Text>
+        ) : (
+          dias.map(({ fecha }) => <HorariosMedico key={fecha} dia={fecha} />)
+        )
+      ) : (
+        <ActivityIndicator size="small" color="#3AB4E5" className="p-5" />
+      )}
     </View>
   );
 };
