@@ -4,6 +4,7 @@ import CardTurno from 'components/CardTurno';
 import { useEffect, useState, useCallback } from 'react';
 import { useFetch } from 'hooks/Fetch';
 import Splash from 'app/splash';
+import LoadingPage from 'app/loading';
 
 type Turno = {
   id_turno: string;
@@ -63,25 +64,23 @@ const Appointments = () => {
     }
   }, [error]);
 
-  if(isLoading) return <Splash />;
-  else return (
+  if (isLoading) return <LoadingPage />;
+  return (
     <View className="flex-1 bg-background">
       <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
-      <Text className="mb-4 mt-[70px] px-4 text-[20px] font-semibold text-primary">
-          Mis Turnos
-      </Text>
+      <Text className="mb-4 mt-[70px] px-4 text-[20px] font-semibold text-primary">Mis Turnos</Text>
       <ScrollView className="flex-1 px-4">
         <View className="mt-4 flex-1 items-center gap-5">
           {appointments.map((turno: Turno) => (
             <CardTurno
               key={turno.id_turno}
-              nombre= {turno.info_medico.nombre}
-              apellido= {turno.info_medico.apellido}
-              especialidad= {turno.info_medico.especialidad}
-              dia= {turno.fecha}
-              hora= {turno.hora}
-              id_turno= {turno.id_turno}
-              pfp= {turno.info_medico.pfp}
+              nombre={turno.info_medico.nombre}
+              apellido={turno.info_medico.apellido}
+              especialidad={turno.info_medico.especialidad}
+              dia={turno.fecha}
+              hora={turno.hora}
+              id_turno={turno.id_turno}
+              pfp={turno.info_medico.pfp}
               onPress={() => router.push(`(appointments)/appointment-details/${turno.id_turno}`)}
             />
           ))}

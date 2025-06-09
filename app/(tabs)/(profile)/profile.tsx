@@ -10,6 +10,7 @@ import { useFetch } from 'hooks/Fetch';
 import PopUpModal from 'components/PopUpModal';
 import Splash from 'app/splash';
 import * as ImagePicker from 'expo-image-picker';
+import LoadingPage from 'app/loading';
 
 interface UserData {
   id_usuario: string;
@@ -131,101 +132,98 @@ const Profile = () => {
 
   useEffect(() => {
     if (isLoading3 || !data3) return;
-    if(data3.status === 200) return router.replace('/(auth)/login');
+    if (data3.status === 200) return router.replace('/(auth)/login');
   }, [data3, isLoading3]);
 
+  if (isLoading) return <LoadingPage />;
+  return (
+    <View className="flex-1 bg-background">
+      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
+      <View className="mb-4 mt-[70px] flex-row justify-between">
+        <Text className="px-8 text-[20px] font-semibold text-primary">Mi Perfil</Text>
+        <TouchableOpacity
+          className="flex-row items-center gap-2 px-8"
+          onPress={() => router.replace('(auth)/login')}>
+          <Text className="text-[13px] text-[#b2b2b2]">Salir</Text>
+          <Icon name="logout" size={17} color="#b2b2b2" />
+        </TouchableOpacity>
+      </View>
+      <ScrollView className="flex-1">
+        <ProfilePicture pfp={pfp} setPfp={setPfp} />
+        <View className="mt-[30px] gap-5">
+          <EditFormTextInput
+            title="Nombre"
+            actualValue={userdata.nombre}
+            value={nombre}
+            handleChangeText={setNombre}
+            maxLength={20}
+            editing={nombreOpen}
+            setEditing={setNombreOpen}
+          />
+          <EditFormTextInput
+            title="Apellido"
+            actualValue={userdata.apellido}
+            value={apellido}
+            handleChangeText={setApellido}
+            maxLength={20}
+            editing={apellidoOpen}
+            setEditing={setApellidoOpen}
+          />
+          <EditFormTextInput title="Mail" actualValue={userdata.mail} editable={false} />
+          <ObraSocialInput
+            title="Obra Social"
+            userObraSocial={userdata.afiliaciones?.obras_sociales?.nombre ?? null}
+            userPlan={userdata.afiliaciones?.planes_obras_sociales?.nombre_plan ?? null}
+            userNroAfiliado={userdata.afiliaciones?.nro_credencial ?? null}
+            setShowModalSave={setShowModalSave}
+          />
 
-  if (isLoading && primeraCarga) {
-    return <Splash />;
-  } else
-    return (
-      <View className="flex-1 bg-background">
-        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
-        <View className="mb-4 mt-[70px] flex-row justify-between">
-          <Text className="px-8 text-[20px] font-semibold text-primary">Mi Perfil</Text>
-          <TouchableOpacity
-            className="flex-row items-center gap-2 px-8"
-            onPress={() => router.replace('(auth)/login')}>
-            <Text className="text-[13px] text-[#b2b2b2]">Salir</Text>
-            <Icon name="logout" size={17} color="#b2b2b2" />
-          </TouchableOpacity>
-        </View>
-        <ScrollView className="flex-1">
-          <ProfilePicture pfp={pfp} setPfp={setPfp} />
-          <View className="mt-[30px] gap-5">
-            <EditFormTextInput
-              title="Nombre"
-              actualValue={userdata.nombre}
-              value={nombre}
-              handleChangeText={setNombre}
-              maxLength={20}
-              editing={nombreOpen}
-              setEditing={setNombreOpen}
-            />
-            <EditFormTextInput
-              title="Apellido"
-              actualValue={userdata.apellido}
-              value={apellido}
-              handleChangeText={setApellido}
-              maxLength={20}
-              editing={apellidoOpen}
-              setEditing={setApellidoOpen}
-            />
-            <EditFormTextInput title="Mail" actualValue={userdata.mail} editable={false} />
-            <ObraSocialInput
-              title="Obra Social"
-              userObraSocial={userdata.afiliaciones?.obras_sociales?.nombre ?? null}
-              userPlan={userdata.afiliaciones?.planes_obras_sociales?.nombre_plan ?? null}
-              userNroAfiliado={userdata.afiliaciones?.nro_credencial ?? null}
-              setShowModalSave={setShowModalSave}
-            />
-
-            <View className="flex gap-4 px-[50px]">
-              {!disabled && (
-                <ConfirmButton
-                  title="Guardar cambios"
-                  onPress={() => setTrigger2(true)}
-                  disabled={isLoading2}
-                />
-              )}
+          <View className="flex gap-4 px-[50px]">
+            {!disabled && (
               <ConfirmButton
-                title="Historial"
-                onPress={() => {
-                  router.push('/(tabs)/(profile)/historial');
-                }}
+                title="Guardar cambios"
+                onPress={() => setTrigger2(true)}
+                disabled={isLoading2}
               />
-            </View>
-            <View className="mt-2 gap-3 px-[50px]">
-              <TouchableOpacity>
-                <Text
-                  className="text-[15px] text-primary"
-                  onPress={() => {
-                    router.push('/(tabs)/(profile)/changePasswordProfile');
-                  }}>
-                  Cambiar contraseña
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setShowModalDelete(true)}>
-                <Text className="text-[15px] text-[#ff373a]">Eliminar cuenta</Text>
-              </TouchableOpacity>
-            </View>
+            )}
+            <ConfirmButton
+              title="Historial"
+              onPress={() => {
+                router.push('/(tabs)/(profile)/historial');
+              }}
+            />
           </View>
-        </ScrollView>
-        <PopUpModal
-          modalOpen={showModalSave}
-          setModalOpen={setShowModalSave}
-          title="¡Los cambios se han guardado exitosamente!"
-        />
-        <PopUpModal
+          <View className="mt-2 gap-3 px-[50px]">
+            <TouchableOpacity>
+              <Text
+                className="text-[15px] text-primary"
+                onPress={() => {
+                  router.push('/(tabs)/(profile)/changePasswordProfile');
+                }}>
+                Cambiar contraseña
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowModalDelete(true)}>
+              <Text className="text-[15px] text-[#ff373a]">Eliminar cuenta</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+      <PopUpModal
+        modalOpen={showModalSave}
+        setModalOpen={setShowModalSave}
+        title="¡Los cambios se han guardado exitosamente!"
+      />
+      <PopUpModal
         modalOpen={showModalDelete}
         setModalOpen={setShowModalDelete}
         title="¿Desea eliminar su cuenta?"
         pressable={true}
         onPress={() => setTrigger3(true)}
         isLoading={isLoading3}
-        />
-      </View>
-    );
+      />
+    </View>
+  );
 };
 
 export default Profile;
