@@ -7,6 +7,7 @@ import { useTurnoStore } from 'hooks/TurnoSeleccionado';
 
 interface propsMedico {
   dia: string;
+  id_medico: string; // Optional if not used
 }
 
 type Turno = {
@@ -14,7 +15,7 @@ type Turno = {
   id_turno: string;
 };
 
-const HorariosMedico = ({ dia }: propsMedico) => {
+const HorariosMedico = ({ dia, id_medico }: propsMedico) => {
   const [open, setOpen] = useState(false);
 
   const [horarios, setHorarios] = useState<Turno[] | []>([]);
@@ -35,7 +36,7 @@ const HorariosMedico = ({ dia }: propsMedico) => {
   const [trigger, setTrigger] = useState(false);
 
   const { data, error, isLoading } = useFetch({
-    endpoint: `/horarios/${dia}`,
+    endpoint: `/horarios/${id_medico}/${dia}`,
     method: 'GET',
     trigger: trigger,
     sendToken: true,
@@ -56,6 +57,7 @@ const HorariosMedico = ({ dia }: propsMedico) => {
 
   useEffect(() => {
     if (isLoading || !data) return;
+    console.log(data.data);
 
     setHorarios(data.data);
   }, [data, isLoading]);

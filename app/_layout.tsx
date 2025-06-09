@@ -11,6 +11,7 @@ export default function Layout() {
         <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="oops" />
           <Stack.Screen name="verify-os" />
+          <Stack.Screen name="loading" />
         </Stack>
       </SafeAreaView>
     </SafeAreaProvider>

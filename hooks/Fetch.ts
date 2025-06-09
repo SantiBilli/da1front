@@ -60,6 +60,9 @@ export const useFetch = ({
       headers['Authorization'] = `Bearer ${token}`;
     }
 
+    console.log('===================================');
+    console.log(`${process.env.EXPO_PUBLIC_API_URL}${endpoint}`);
+
     try {
       const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}${endpoint}`, {
         method,

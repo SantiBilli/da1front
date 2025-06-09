@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import CardListamedicoes from 'components/CardListaDoctores';
 import { useFetch } from 'hooks/Fetch';
 import Splash from 'app/splash';
+import LoadingPage from 'app/loading';
 
 interface propsMedico {
   id_usuario: string;
@@ -60,40 +61,38 @@ const medicosList = () => {
     setFilteredSpecialties(filtered);
   }, [searchText, data]);
 
-  if (isLoading) {
-    return <Splash />;
-  } else
-    return (
-      <View className="flex-1 bg-background">
-        <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
-        <Text className="mb-4 mt-[70px] px-8 text-[20px] font-semibold text-primary ">{id}</Text>
-        <View className="flex items-center justify-center pb-3">
-          <View className=" h-[50px] w-[340px] flex-row items-center rounded-[10px] border-[1px] border-[#B2B2B2] py-2 pl-4 pr-[30px] ">
-            <TextInput
-              className="h-full w-full py-2 text-[16px] font-semibold text-primary"
-              placeholder="Buscar especialidad..."
-              placeholderTextColor="#B2B2B2"
-              onChangeText={setSearchText}
-            />
-            <Icon name="search" size={25} color="#3AB4E5" />
-          </View>
+  if (isLoading) return <LoadingPage />;
+  return (
+    <View className="flex-1 bg-background">
+      <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
+      <Text className="mb-4 mt-[70px] px-8 text-[20px] font-semibold text-primary ">{id}</Text>
+      <View className="flex items-center justify-center pb-3">
+        <View className=" h-[50px] w-[340px] flex-row items-center rounded-[10px] border-[1px] border-[#B2B2B2] py-2 pl-4 pr-[30px] ">
+          <TextInput
+            className="h-full w-full py-2 text-[16px] font-semibold text-primary"
+            placeholder="Buscar especialidad..."
+            placeholderTextColor="#B2B2B2"
+            onChangeText={setSearchText}
+          />
+          <Icon name="search" size={25} color="#3AB4E5" />
         </View>
-        <ScrollView className="flex-1 px-4">
-          <View className="mt-4 flex-1 items-center gap-5">
-            {filteredSpecialties.map((medico: propsMedico) => (
-              <CardListamedicoes
-                key={medico.id_usuario}
-                nombre={medico.nombre}
-                apellido={medico.apellido}
-                disponibilidad={medico.disponibilidad}
-                direccion={medico.direccion}
-                id_medico={medico.id_usuario}
-                pfp={medico.pfp}
-              />
-            ))}
-          </View>
-        </ScrollView>
       </View>
-    );
+      <ScrollView className="mb-3 flex-1 px-4">
+        <View className="mt-4 flex-1 items-center gap-5">
+          {filteredSpecialties.map((medico: propsMedico) => (
+            <CardListamedicoes
+              key={medico.id_usuario}
+              nombre={medico.nombre}
+              apellido={medico.apellido}
+              disponibilidad={medico.disponibilidad}
+              direccion={medico.direccion}
+              id_medico={medico.id_usuario}
+              pfp={medico.pfp}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </View>
+  );
 };
 export default medicosList;
