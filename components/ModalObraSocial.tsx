@@ -112,7 +112,9 @@ const ModalObraSocial = ({ modalOpen, setModalOpen, setShowModalSave }: props) =
 
   useEffect(() => {
     if (isLoading3 || !data3) return;
+
     handleClose();
+    setDisableButton(false);
     setTieneObraSocial(true);
     setShowModalSave(true);
   }, [data3, isLoading3]);
@@ -121,6 +123,14 @@ const ModalObraSocial = ({ modalOpen, setModalOpen, setShowModalSave }: props) =
     if (obraSocial == '' || plan == '' || nroAfiliado == '') return;
     setTrigger3(true);
   };
+
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (isLoading3) {
+      setDisableButton(true);
+    }
+  }, [isLoading3]);
 
   return (
     <View>
@@ -186,7 +196,7 @@ const ModalObraSocial = ({ modalOpen, setModalOpen, setShowModalSave }: props) =
                 <ConfirmButton
                   title="Confirmar"
                   onPress={handleConfirm}
-                  disabled={obraSocial == '' || plan == '' || nroAfiliado == '' || isLoading3}
+                  disabled={obraSocial == '' || plan == '' || nroAfiliado == '' || disableButton}
                 />
               </View>
             </View>

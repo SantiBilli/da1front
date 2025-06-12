@@ -5,6 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useFetch } from 'hooks/Fetch';
 import Splash from 'app/splash';
 import LoadingPage from 'app/loading';
+import { useTurnoStore } from 'hooks/TurnoSeleccionado';
 
 type Turno = {
   id_turno: string;
@@ -37,6 +38,12 @@ const Appointments = () => {
       setTrigger(true);
     }, [])
   );
+
+  const { resetTurno } = useTurnoStore();
+
+  useEffect(() => {
+    resetTurno();
+  }, []);
 
   useEffect(() => {
     if (trigger) return setTrigger(false);

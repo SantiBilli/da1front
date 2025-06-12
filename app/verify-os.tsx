@@ -4,6 +4,7 @@ import { useFetch } from 'hooks/Fetch';
 import { router } from 'expo-router';
 import Splash from './splash';
 import { useObraSocialStore } from 'hooks/ObraSocial';
+import LoadingPage from './loading';
 
 const verifyOs = () => {
   const { setTieneObraSocial } = useObraSocialStore();
@@ -25,10 +26,6 @@ const verifyOs = () => {
 
     return router.replace('/popup');
   }, [data, isLoading]);
-
-  if (isLoading) {
-    return <Splash />;
-  }
 };
 
 export default verifyOs;
