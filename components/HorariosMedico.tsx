@@ -43,10 +43,6 @@ const HorariosMedico = ({ dia, id_medico }: propsMedico) => {
   });
 
   useEffect(() => {
-    resetTurno();
-  }, []);
-
-  useEffect(() => {
     setTrigger(false);
   }, [trigger]);
 
@@ -57,8 +53,6 @@ const HorariosMedico = ({ dia, id_medico }: propsMedico) => {
 
   useEffect(() => {
     if (isLoading || !data) return;
-    console.log(data.data);
-
     setHorarios(data.data);
   }, [data, isLoading]);
 
@@ -83,13 +77,13 @@ const HorariosMedico = ({ dia, id_medico }: propsMedico) => {
             {horarios.map(({ hora, id_turno }) => (
               <TouchableOpacity
                 key={id_turno}
-                className={`flex h-[25px] w-[45px] items-center justify-center rounded-md px-1 py-2 ${idTurnoSeleccionado === id_turno ? 'bg-primary' : 'bg-[#84D7A3A6]'}`}
+                className={`flex h-[35px] w-[55px] items-center justify-center rounded-md px-1 py-2 ${idTurnoSeleccionado === id_turno ? 'bg-primary' : 'bg-[#84D7A3A6]'}`}
                 onPress={() => {
                   setDia(dia);
                   setHora(hora);
                   setIdTurno(id_turno);
                 }}>
-                <Text className="flex text-[10px] text-black">{hora.slice(0, 5)}</Text>
+                <Text className="flex text-[12px] text-black">{hora.slice(0, 5)}</Text>
               </TouchableOpacity>
             ))}
           </View>

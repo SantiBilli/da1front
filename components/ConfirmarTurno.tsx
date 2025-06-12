@@ -33,7 +33,16 @@ const ConfirmarTurno = () => {
   useEffect(() => {
     if (isLoading || !data) return;
     if (data.status === 200) return router.replace('(tabs)/(appointments)');
+    setDisableButton(false);
   }, [data, isLoading]);
+
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) {
+      setDisableButton(true);
+    }
+  }, [isLoading]);
 
   return (
     <View className="flex items-center justify-center gap-5 py-5">
@@ -48,7 +57,7 @@ const ConfirmarTurno = () => {
       <ConfirmButton
         onPress={handlePress}
         title="Confirmar Turno"
-        disabled={idTurnoSeleccionado == '' ? true : false || isLoading}
+        disabled={idTurnoSeleccionado == '' ? true : false || disableButton}
       />
     </View>
   );

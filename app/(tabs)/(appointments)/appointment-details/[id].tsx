@@ -51,9 +51,8 @@ const AppointmentDetails = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
-    if (data.status === 200) {
-      router.replace('/(tabs)/(appointments)/appointments');
-    }
+    if (data.status === 200) return router.replace('/(tabs)/(appointments)/appointments');
+    setDisableButton(false);
   }, [data, isLoading]);
 
   useEffect(() => {
@@ -92,7 +91,15 @@ const AppointmentDetails = () => {
     setInfoTurno(data2.data.turno);
   }, [data2, isLoading2]);
 
-  if (isLoading) return <LoadingPage />;
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) {
+      setDisableButton(true);
+    }
+  }, [isLoading]);
+
+  if (isLoading2) return <LoadingPage />;
   return (
     <View className="flex-1 bg-background">
       <View className="absolute -top-[140px] h-[200px] w-[500px] self-center rounded-[50%] bg-secondary" />
@@ -140,9 +147,12 @@ const AppointmentDetails = () => {
         </View>
         <View className="mt-[30px] flex items-center justify-center">
           <TouchableOpacity
+            disabled={isLoading}
             onPress={handlePress}
-            className={`mb-[20px] h-[40px] w-[80%] items-center justify-center rounded-[10px] border-[1px] border-[#ff373a] bg-[rgba(255,55,58,0.1)] ${isLoading && 'opacity-50'}`}>
-            <Text className="text-[15px] text-[#ff373a]">Cancelar Turno</Text>
+            className={`mb-[20px] h-[40px] w-[80%] items-center justify-center rounded-[10px] border-[1px] ${disableButton ? 'border-gray-500 bg-slate-300 opacity-50' : 'border-[#ff373a] bg-[rgba(255,55,58,0.1)]'}`}>
+            <Text className={`text-[15px] ${disableButton ? 'text-gray-500' : 'text-[#ff373a]'}`}>
+              Cancelar Turno
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

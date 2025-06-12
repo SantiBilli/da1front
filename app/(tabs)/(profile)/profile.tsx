@@ -221,6 +221,7 @@ const Profile = () => {
         pressable={true}
         onPress={() => setTrigger3(true)}
         isLoading={isLoading3}
+        pressableText="Eliminar cuenta"
       />
     </View>
   );
