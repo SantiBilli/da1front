@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfilePicture from 'components/PfpEdit';
 import EditFormTextInput from 'components/EditFormTextInput';
@@ -109,6 +109,7 @@ const Profile = () => {
       setTrigger(true);
       const timer = setTimeout(() => {
         setShowModalSave(false);
+        setDisableButton(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
@@ -134,6 +135,14 @@ const Profile = () => {
     if (isLoading3 || !data3) return;
     if (data3.status === 200) return router.replace('/(auth)/login');
   }, [data3, isLoading3]);
+
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (isLoading2 || isLoading3) {
+      setDisableButton(true);
+    }
+  }, [isLoading2]);
 
   if (isLoading) return <LoadingPage />;
   return (
@@ -183,7 +192,7 @@ const Profile = () => {
               <ConfirmButton
                 title="Guardar cambios"
                 onPress={() => setTrigger2(true)}
-                disabled={isLoading2}
+                disabled={disableButton}
               />
             )}
             <ConfirmButton
