@@ -1,7 +1,7 @@
 // app/index.tsx
 import { Redirect, router } from 'expo-router';
 import { useFetch } from 'hooks/Fetch';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import Splash from './splash';
 
@@ -13,19 +13,25 @@ export default function Index() {
     method: 'POST',
     trigger: true,
     sendToken: true,
+    wait: true,
   });
 
-  useEffect(() => {
-    if (isLoading || !data) return;
-
-    return router.replace('/verify-os');
-  }, [data, isLoading]);
+  const [minimumTimePassed, setMinimumTimePassed] = useState(false);
 
   useEffect(() => {
-    if (error) return router.replace('/(auth)/login');
-  }, [error]);
+    if (!isLoading && data && minimumTimePassed) {
+      router.replace('/verify-os?from=index');
+    }
+  }, [data, isLoading, minimumTimePassed]);
 
-  if (isLoading) {
-    return <Splash />;
-  }
+  useEffect(() => {
+    if (error && minimumTimePassed) return router.replace('/(auth)/login');
+  }, [error, minimumTimePassed]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMinimumTimePassed(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <Splash />;
 }
