@@ -11,6 +11,7 @@ interface UseFetchParams {
   formData?: boolean;
   body?: any;
   login?: boolean;
+  wait?: boolean;
 }
 
 interface FetchError {
@@ -33,6 +34,7 @@ export const useFetch = ({
   formData = false,
   body = null,
   login = false,
+  wait = false,
 }: UseFetchParams) => {
   const [data, setData] = useState<FetchData | null>(null);
   const [error, setError] = useState<FetchError | null>(null);
@@ -74,9 +76,11 @@ export const useFetch = ({
       console.log(method, endpoint, response.status);
 
       if (!response.ok) {
+        console.log(response.status, wait);
+
         const res = await response.json();
 
-        if (!login && response.status === 401) return router.replace('/(auth)/login');
+        if (!wait && !login && response.status === 401) return router.replace('/(auth)/login');
 
         setError({ status: response.status, msg: res.message });
         return;

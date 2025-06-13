@@ -63,7 +63,7 @@ const Login = () => {
 
     setToken(content.token);
 
-    return router.replace('/verify-os');
+    return router.replace('/verify-os?from=login');
   }, [data, isLoading]);
 
   useEffect(() => {
