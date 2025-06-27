@@ -1,6 +1,6 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import Icon2 from 'react-native-vector-icons/Fontisto';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface Props {
   modalOpen: boolean;
@@ -11,6 +11,7 @@ interface Props {
   closable?: boolean;
   isLoading?: boolean;
   pressableText?: string;
+  close?: () => void;
 }
 
 const PopUpModal = ({
@@ -22,14 +23,31 @@ const PopUpModal = ({
   closable = true,
   isLoading,
   pressableText,
+  close,
 }: Props) => {
+  useEffect(() => {
+    if (modalOpen) {
+      const timer = setTimeout(() => {
+        close ? (close(), setModalOpen(false)) : setModalOpen(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [modalOpen]);
+
   return (
     <Modal visible={modalOpen} transparent={true}>
       <View className="flex-1 items-center justify-center bg-black/50">
         <View className="relative w-[85%] rounded-[10px] border-[1px] border-secondary bg-background py-[60px]">
           {closable && (
             <TouchableOpacity
-              onPress={() => setModalOpen(false)}
+              onPress={
+                close
+                  ? () => {
+                      setModalOpen(false);
+                      close();
+                    }
+                  : () => setModalOpen(false)
+              }
               className="absolute right-2 top-2">
               <Icon2 name="close-a" size={19} color="#3ab4e5" className="p-4" />
             </TouchableOpacity>
