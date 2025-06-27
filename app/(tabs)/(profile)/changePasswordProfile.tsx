@@ -46,25 +46,16 @@ const ChangePasswordProfile = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
+    console.log('Data:', data);
+
     setShowModal(true);
   }, [data, isLoading]);
 
   useEffect(() => {
     if (error != null) {
-      if (error.status == 409) return setInvalidCredentials(true);
+      if (error.status == 409) return setInvalidCredentials(true), setDisableButton(false);
     }
   }, [error]);
-
-  useEffect(() => {
-    if (showModal) {
-      const timer = setTimeout(() => {
-        setShowModal(false);
-        router.replace('/(auth)/login');
-        setDisableButton(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showModal]);
 
   const handlePress = () => {
     setPasswordsDontMatch(false);
@@ -132,6 +123,7 @@ const ChangePasswordProfile = () => {
         modalOpen={showModal}
         setModalOpen={setShowModal}
         title="¡Su contraseña se ha cambiado exitosamente!"
+        close={() => router.replace('/(auth)/login')}
       />
     </KeyboardAvoidingView>
   );

@@ -104,17 +104,6 @@ const Profile = () => {
     setApellidoOpen(false);
   }, [data2, isLoading2]);
 
-  useEffect(() => {
-    if (showModalSave) {
-      setTrigger(true);
-      const timer = setTimeout(() => {
-        setShowModalSave(false);
-        setDisableButton(false);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showModalSave]);
-
   const [trigger3, setTrigger3] = useState(false);
   const {
     data: data3,
@@ -143,6 +132,10 @@ const Profile = () => {
       setDisableButton(true);
     }
   }, [isLoading2]);
+
+  useEffect(() => {
+    console.log('Modal is open:', showModalSave);
+  }, [showModalSave]);
 
   if (isLoading) return <LoadingPage />;
   return (
@@ -222,6 +215,10 @@ const Profile = () => {
         modalOpen={showModalSave}
         setModalOpen={setShowModalSave}
         title="¡Los cambios se han guardado exitosamente!"
+        close={() => {
+          setDisableButton(false);
+          setTrigger(true);
+        }}
       />
       <PopUpModal
         modalOpen={showModalDelete}
