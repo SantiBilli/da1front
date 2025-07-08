@@ -1,24 +1,24 @@
-import { View, Text} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 interface Props {
-    direccion: string,
+  direccion: string;
 }
-const Mapa = ({direccion}: Props) => {
-    const[coords, setCoords] = useState<{latitude: number, longitude: number}|null>(null);
+const Mapa = ({ direccion }: Props) => {
+  const [coords, setCoords] = useState<{ latitude: number; longitude: number } | null>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchCoords = async () => {
-        if (!direccion) return;
+      if (!direccion) return;
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           console.log('Location permission not granted');
           return;
         }
-        const result = await Location.geocodeAsync(direccion);   
+        const result = await Location.geocodeAsync(direccion);
         if (result.length > 0) {
           setCoords({
             latitude: result[0].latitude,
@@ -34,14 +34,17 @@ const Mapa = ({direccion}: Props) => {
   }, [direccion]);
 
   return (
-    <View className="w-[250px] h-[150px]">
-        {coords && (
-        <MapView style={{flex: 1}} initialRegion={{...coords, latitudeDelta: 0.01, longitudeDelta: 0.01}}>
-         <Marker coordinate={coords}/>
+    <View className="h-[150px] w-[250px]">
+      {coords && (
+        <MapView
+          testID="map-view"
+          style={{ flex: 1 }}
+          initialRegion={{ ...coords, latitudeDelta: 0.01, longitudeDelta: 0.01 }}>
+          <Marker testID="map-marker" coordinate={coords} />
         </MapView>
-        )}
+      )}
     </View>
-  )
-}
+  );
+};
 
-export default Mapa
+export default Mapa;

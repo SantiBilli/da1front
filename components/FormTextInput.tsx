@@ -37,7 +37,10 @@ const FormTextInput = ({
           secureTextEntry={!showPassword && isPassword ? true : false}
         />
         {isPassword == true ? (
-          <TouchableOpacity className="" onPress={() => setShowPassword(!showPassword)}>
+          <TouchableOpacity
+            testID="toggle-password"
+            className=""
+            onPress={() => setShowPassword(!showPassword)}>
             <Icon name={showPassword ? 'eye' : 'eye-closed'} size={20} color={'#B2B2B2'} />
           </TouchableOpacity>
         ) : null}

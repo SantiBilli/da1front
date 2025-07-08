@@ -27,6 +27,7 @@ const CardListamedicoes = ({
 
   return (
     <TouchableOpacity
+      testID="card-touchable"
       onPress={() => router.push(`(home)/doctors-list/doctors-details/${id_medico}`)}>
       <LinearGradient
         colors={['#45CADE4D', '#A0E8EB4D', '#FFFFFF4D']}

@@ -37,7 +37,7 @@ const EditFormTextInput = ({
       <View className="flex-row items-center justify-between border-b-[1px] border-secondary py-1">
         <Text className="py-1 text-[15px]">{actualValue}</Text>
         {editable && (
-          <TouchableOpacity onPress={() => setEditing(!editing)}>
+          <TouchableOpacity testID="edit-icon" onPress={() => setEditing(!editing)}>
             <Icon name="pencil" size={19} color="#b2b2b2" />
           </TouchableOpacity>
         )}
