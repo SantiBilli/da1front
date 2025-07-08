@@ -11,6 +11,7 @@ interface props {
 const ConfirmButton = ({ title, onPress, otherStyles, disabled }: props) => {
   return (
     <TouchableOpacity
+      testID="confirm-button"
       disabled={disabled}
       onPress={disabled ? undefined : onPress}
       className={`w-full items-center rounded-[10px] border-[1px] px-[50px] py-3 ${otherStyles} ${disabled ? 'border-gray-500 bg-slate-300 opacity-50' : 'border-secondary bg-[#DDF2FD]'}`}>

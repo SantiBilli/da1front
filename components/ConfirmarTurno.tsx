@@ -57,7 +57,7 @@ const ConfirmarTurno = () => {
       <ConfirmButton
         onPress={handlePress}
         title="Confirmar Turno"
-        disabled={idTurnoSeleccionado == '' ? true : false || disableButton}
+        disabled={idTurnoSeleccionado === '' || disableButton}
       />
     </View>
   );
