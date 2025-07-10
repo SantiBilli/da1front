@@ -5,9 +5,15 @@ import { router, useLocalSearchParams } from 'expo-router';
 import Splash from './splash';
 import { useObraSocialStore } from 'hooks/ObraSocial';
 import LoadingPage from './loading';
+import { useAuthStore } from 'hooks/AuthStore';
 
 const verifyOs = () => {
   const params = useLocalSearchParams();
+
+  // const { clearToken } = useAuthStore();
+  // useEffect(() => {
+  //   clearToken();
+  // }, []);
 
   const { setTieneObraSocial } = useObraSocialStore();
   const { data, error, isLoading } = useFetch({

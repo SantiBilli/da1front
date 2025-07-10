@@ -50,6 +50,11 @@ const ChangePassword = () => {
     setTrigger(true);
   };
 
+  const validateSafePassword = (password: string) => {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return re.test(password);
+  };
+
   return (
     <KeyboardAvoidingView behavior="padding" className="flex-1 bg-background">
       <View className="absolute left-[-52px] top-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
@@ -57,22 +62,38 @@ const ChangePassword = () => {
       <View className="flex-1 items-center justify-center">
         <Text className="mb-[20px] text-[25px] font-bold text-primary">Cambiar contraseña</Text>
         <View className="my-9 flex w-full gap-[60px]">
-          <FormTextInput
-            title="Contraseña"
-            value={newPassword}
-            handleChangeText={setNewPassword}
-            isPassword={true}
-            maxLength={49}
-          />
+          <View>
+            <FormTextInput
+              title="Contraseña"
+              value={newPassword}
+              handleChangeText={setNewPassword}
+              isPassword={true}
+              maxLength={49}
+            />
+            {!validateSafePassword(newPassword) && newPassword != '' && (
+              <Text className="mt-3 px-7 text-[12px] text-red-500">
+                Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter
+                especial.
+              </Text>
+            )}
+          </View>
         </View>
         <View className="my-2 flex w-full gap-[60px]">
-          <FormTextInput
-            title="Confirmar nueva contraseña"
-            value={confirmPassword}
-            handleChangeText={setConfirmPassword}
-            isPassword={true}
-            maxLength={49}
-          />
+          <View>
+            <FormTextInput
+              title="Confirmar nueva contraseña"
+              value={confirmPassword}
+              handleChangeText={setConfirmPassword}
+              isPassword={true}
+              maxLength={49}
+            />
+            {!validateSafePassword(confirmPassword) && confirmPassword != '' && (
+              <Text className="mt-3 px-7 text-[12px] text-red-500">
+                Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter
+                especial.
+              </Text>
+            )}
+          </View>
         </View>
         {passwordMatch && (
           <Text className="mt-3 text-[12px] text-red-500">Las contraseñas no coinciden.</Text>
@@ -81,7 +102,13 @@ const ChangePassword = () => {
           <ConfirmButton
             title="Cambiar contraseña"
             onPress={handlePress}
-            disabled={newPassword == '' || confirmPassword == '' || isLoading}></ConfirmButton>
+            disabled={
+              newPassword == '' ||
+              confirmPassword == '' ||
+              isLoading ||
+              !validateSafePassword(newPassword) ||
+              !validateSafePassword(confirmPassword)
+            }></ConfirmButton>
         </View>
       </View>
       <View className="absolute bottom-[-180px] left-[-52px] h-[300px] w-[300px] rounded-full bg-secondary" />

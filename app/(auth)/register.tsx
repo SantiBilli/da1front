@@ -49,12 +49,12 @@ const Register = () => {
   const validateMail = (mail: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(mail).toLowerCase());
-  }
+  };
 
   const validateSafePassword = (password: string) => {
     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return re.test(password);
-  }
+  };
 
   useEffect(() => {
     if (trigger) return setTrigger(false);
@@ -97,21 +97,44 @@ const Register = () => {
         <Image source={images.logo} className="mb-[30px] mt-[60px] h-[70px] w-[70px]" />
         <Text className="mb-[30px] text-[32px] text-primary">¡Registrate ahora!</Text>
         <View className="flex w-full gap-[17px]">
-          <FormTextInput title="Nombre" value={nombre} handleChangeText={setNombre} maxLength={49}/>
-          <FormTextInput title="Apellido" value={apellido} handleChangeText={setApellido} maxLength={49} />
+          <FormTextInput
+            title="Nombre"
+            value={nombre}
+            handleChangeText={setNombre}
+            maxLength={49}
+          />
+          <FormTextInput
+            title="Apellido"
+            value={apellido}
+            handleChangeText={setApellido}
+            maxLength={49}
+          />
           <FormTextInput title="Email" value={mail} handleChangeText={setMail} maxLength={49} />
+          {!validateMail(mail) && mail != '' && (
+            <Text className="px-7 text-[12px] text-red-500">Email no válido.</Text>
+          )}
           <FormTextInput
             title="Contraseña"
             value={contrasena}
             handleChangeText={setContrasena}
             isPassword
           />
+          {!validateSafePassword(contrasena) && contrasena != '' && (
+            <Text className="px-7 text-[12px] text-red-500">
+              Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
+            </Text>
+          )}
           <FormTextInput
             title="Confirmar Contraseña"
             value={confirmarContrasena}
             handleChangeText={setConfirmarContrasena}
             isPassword
           />
+          {!validateSafePassword(confirmarContrasena) && confirmarContrasena != '' && (
+            <Text className="px-7 text-[12px] text-red-500">
+              Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
+            </Text>
+          )}
         </View>
 
         <View className="mt-10 flex items-center justify-center gap-5">
