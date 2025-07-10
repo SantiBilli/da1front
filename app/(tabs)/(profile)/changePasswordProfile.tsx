@@ -45,7 +45,7 @@ const ChangePasswordProfile = () => {
 
   useEffect(() => {
     if (isLoading || !data) return;
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     setShowModal(true);
   }, [data, isLoading]);
