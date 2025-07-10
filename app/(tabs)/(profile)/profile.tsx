@@ -133,10 +133,6 @@ const Profile = () => {
     }
   }, [isLoading2]);
 
-  useEffect(() => {
-    console.log('Modal is open:', showModalSave);
-  }, [showModalSave]);
-
   if (isLoading) return <LoadingPage />;
   return (
     <View className="flex-1 bg-background">
