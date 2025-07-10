@@ -19,7 +19,16 @@ cd da1front
 npm install
 ```
 
-### 3. Iniciar el proyecto
+### 3. Configurar entorno
+
+Crear un archivo `.env` en la raíz del proyecto con las variables necesarias:
+
+```
+EXPO_PUBLIC_API_URL='http://149.50.131.211:3500/api' (Back hosteado en VPS de DonWeb)
+# EXPO_PUBLIC_API_URL='http://localhost:3500/api' (Back hosteado localmente)
+```
+
+### 4. Iniciar el proyecto
 
 ```bash
 npx expo start
@@ -63,5 +72,4 @@ npx expo start
 
 ## 👨‍⚕️ Autores
 
-Desarrollado por **Santiago Felipe Billinghurst, Juana Estarli y Nicolas Estepañuk**  
-Proyecto académico / demostrativo para gestión de turnos médicos.
+Desarrollado por **Santiago Felipe Billinghurst, Juana Estarli y Nicolas Estepañuk**
