@@ -26,7 +26,7 @@ const PopUpModal = ({
   close,
 }: Props) => {
   useEffect(() => {
-    if (modalOpen) {
+    if (modalOpen && !pressable) {
       const timer = setTimeout(() => {
         close ? (close(), setModalOpen(false)) : setModalOpen(false);
       }, 5000);

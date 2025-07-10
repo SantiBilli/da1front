@@ -1,0 +1,66 @@
+# 🩺 MediGo - App de Turnos Médicos
+
+MediGo es una aplicación móvil desarrollada con **Expo (React Native)** que permite a los usuarios registrarse, iniciar sesión, reservar turnos médicos, ver su historial de consultas, modificar datos de perfil y mucho más.
+
+---
+
+## 🚀 Instalación y puesta en marcha
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/SantiBilli/da1front.git
+cd da1front
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Iniciar el proyecto
+
+```bash
+npx expo start
+```
+
+> Esto abrirá Expo Developer Tools en tu navegador.
+
+---
+
+## 📱 Probar en un dispositivo móvil
+
+1. **Instalá la app Expo Go** desde [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent) o [App Store](https://apps.apple.com/app/expo-go/id982107779).
+2. Escaneá el **código QR** que aparece en la terminal o en Expo Developer Tools.
+3. Alternativamente, podés abrir el **link de desarrollo** directamente desde tu celular.
+
+---
+
+## 🧩 Requisitos
+
+- Node.js (v16 o superior recomendado)
+- npm
+- Expo CLI (`npx expo`)
+- Dispositivo físico con Expo Go o emulador Android/iOS
+
+---
+
+## 📂 Estructura general
+
+```
+/da1front
+├── app/              # Imágenes y recursos estáticos
+├── components/          # Componentes reutilizables
+├── constants/             # Pantallas principales de la app
+├── hooks/          # Configuración de navegación
+├── package.json         # Dependencias y scripts
+└── README.md
+```
+
+---
+
+## 👨‍⚕️ Autores
+
+Desarrollado por **Santiago Felipe Billinghurst, Juana Estarli y Nicolas Estepañuk**  
+Proyecto académico / demostrativo para gestión de turnos médicos.

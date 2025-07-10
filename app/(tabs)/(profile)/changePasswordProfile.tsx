@@ -37,8 +37,7 @@ const ChangePasswordProfile = () => {
     newPassword === '' ||
     confirmPassword === '' ||
     isLoading ||
-    !validateSafePassword(newPassword) ||
-    newPassword !== confirmPassword;
+    !validateSafePassword(newPassword);
 
   useEffect(() => {
     if (trigger) return setTrigger(false);
@@ -53,7 +52,7 @@ const ChangePasswordProfile = () => {
 
   useEffect(() => {
     if (error != null) {
-      if (error.status == 409) return setInvalidCredentials(true), setDisableButton(false);
+      if (error.status == 409) return setInvalidCredentials(true);
     }
   }, [error]);
 
@@ -64,21 +63,13 @@ const ChangePasswordProfile = () => {
     setTrigger(true);
   };
 
-  const [disableButton, setDisableButton] = useState(false);
-
-  useEffect(() => {
-    if (isLoading) {
-      setDisableButton(true);
-    }
-  }, [isLoading]);
-
   return (
     <KeyboardAvoidingView behavior="padding" className="flex-1 bg-background">
       <View className="absolute left-[-52px] top-[-180px] h-[300px] w-[300px] rounded-full bg-secondary" />
       <View className="absolute right-[-50px] top-[-160px] h-[250px] w-[250px] rounded-full bg-primary" />
       <View className="flex-1 items-center justify-center">
         <Text className="mb-[20px] text-[25px] font-bold text-primary">Cambiar contraseña</Text>
-        <View className="my-2 flex w-full gap-[60px]">
+        <View className="my-2 flex w-full">
           <FormTextInput
             title="Contraseña actual"
             value={actualPassword}
@@ -86,28 +77,34 @@ const ChangePasswordProfile = () => {
             isPassword={true}
           />
         </View>
-        <View className="my-2 flex w-full gap-[60px]">
+        <View className="my-2 flex w-full">
           <FormTextInput
             title="Nueva contraseña"
             value={newPassword}
             handleChangeText={setNewPassword}
             isPassword={true}
           />
+          {!validateSafePassword(newPassword) && newPassword != '' && (
+            <Text className="mt-3 px-7 text-[12px] text-red-500">
+              Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
+            </Text>
+          )}
         </View>
-        <View className="my-2 flex w-full gap-[60px]">
+        <View className="my-2 flex w-full">
           <FormTextInput
             title="Confirmar nueva contraseña"
             value={confirmPassword}
             handleChangeText={setConfirmPassword}
             isPassword={true}
           />
+          {!validateSafePassword(confirmPassword) && confirmPassword != '' && (
+            <Text className="mt-3 px-7 text-[12px] text-red-500">
+              Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
+            </Text>
+          )}
         </View>
         <View className="my-9" style={{ width: 300 }}>
-          <ConfirmButton
-            title="Cambiar contraseña"
-            onPress={handlePress}
-            disabled={disableButton}
-          />
+          <ConfirmButton title="Cambiar contraseña" onPress={handlePress} disabled={disabled} />
         </View>
         {invalidCredentials && (
           <Text className="text-[12px] text-red-500">Credenciales invalidas.</Text>
