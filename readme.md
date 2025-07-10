@@ -50,11 +50,12 @@ npx expo start
 
 ```
 /da1front
-├── app/              # Imágenes y recursos estáticos
-├── components/          # Componentes reutilizables
-├── constants/             # Pantallas principales de la app
-├── hooks/          # Configuración de navegación
-├── package.json         # Dependencias y scripts
+├── app/            # Pages de la aplicacion
+├── assets/         # Imágenes y recursos estáticos
+├── components/     # Componentes reutilizables
+├── constants/      # Constantes para facil acceso a imagenes e iconos
+├── hooks/          # Hooks personalizados
+├── package.json    # Dependencias y scripts
 └── README.md
 ```
 
