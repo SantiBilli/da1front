@@ -24,7 +24,7 @@ npm install
 Crear un archivo `.env` en la raíz del proyecto con las variables necesarias:
 
 ```
-EXPO_PUBLIC_API_URL='http://149.50.131.211:3500/api' (Back hosteado en VPS de DonWeb)
+EXPO_PUBLIC_API_URL='http://DonWeb:3500/api' (Back hosteado en VPS de DonWeb)
 # EXPO_PUBLIC_API_URL='http://localhost:3500/api' (Back hosteado localmente)
 ```
 
